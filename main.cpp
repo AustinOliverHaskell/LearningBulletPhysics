@@ -1,73 +1,67 @@
 #include <iostream>
+#include <cstdlib>
 
-#include <btBulletDynamicsCommon.h>
+#include "./GL/src/h/World.h"
+#include "./GL/src/h/Model.h"
+#include "./GL/src/h/defs.h"
 
 int main (int argc, char * argv[])
 {
+    srand (static_cast <unsigned> (time(0)));
 
-        btBroadphaseInterface* broadphase = new btDbvtBroadphase();
+    std::cout << "Thesis" << std::endl;
 
-        btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-        btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
+    // Create the world
+    World * world = new World();
 
-        btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
+    // Load in the shaders that were going to use
+    GLuint shader = loadShaders("./GL/src/shaders/lightShader.vertexshader", "./GL/src/shaders/lightShader.fragmentshader");
+    GLuint solidShader = loadShaders("./GL/src/shaders/SimpleVertexShader.vertexshader", "./GL/src/shaders/SimpleFragmentShader.fragmentshader");
 
-        btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+    // Create the memory for our singular light
+    GLuint LightID = glGetUniformLocation(shader, "LightPosition_worldspace");
 
-        dynamicsWorld->setGravity(btVector3(0, -10, 0));
+    vec3 lightPosition = vec3(10.0f, 10.0f, 10.0f);
 
+    // Let there be light
+    world->setLight(LightID);
+    world->setLightPos(lightPosition);
 
-        btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+    // Models in our scene, the plane needs to have its normals calculated
+    Model * object = new Model("./GL/src/obj/cube.obj", solidShader, true);
+    Model * plane  = new Model("./GL/src/obj/plane.obj",  solidShader, false, true);
+    Model * light  = new Model("./GL/src/obj/cube.obj", solidShader, false);
 
-        btCollisionShape* fallShape = new btSphereShape(1);
+    // Initilize our buffers
+    object->initBuffers();
+    plane->initBuffers();
+    light->initBuffers();
 
+    // Set the plane to a different color
+    object->randomizeColor();
+    plane->setColor(1.0f, 0.5f, 0.25f);
+    light->setColor(1.0f, 1.0f, 1.0f);
 
-        btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
-        btRigidBody::btRigidBodyConstructionInfo
-        groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
-        btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-        dynamicsWorld->addRigidBody(groundRigidBody);
+    object->setTransform(translate(mat4(), vec3(0.0f, 10.0f, 0.0f)));
+    plane->setTransform(scale(mat4(), vec3(30.0f, 0.0f, 30.0f)));
+    light->setTransform(translate(mat4(), lightPosition));
 
+    // Add them to the scene
+    world->addModel(object);
+    world->addModel(plane);
+    world->addModel(light);
 
-        btDefaultMotionState* fallMotionState =
-                new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0)));
-        btScalar mass = 1;
-        btVector3 fallInertia(0, 0, 0);
-        fallShape->calculateLocalInertia(mass, fallInertia);
-        btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
-        btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
-        dynamicsWorld->addRigidBody(fallRigidBody);
+    // Set Backgrond to black
+    world->setBackgroundColor(0.0f, 0.0f, 0.0f);
 
+    // Render
+    while(glfwGetKey(world->getWindow(), GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(world->getWindow()) == 0 )
+    {
+        world->render();
+    }
 
-        for (int i = 0; i < 300; i++)
-        {
-            dynamicsWorld->stepSimulation(1 / 60.f, 10);
+    // The world object will handle the destruction of all models in its space
+    delete world;
 
-            btTransform trans;
-            fallRigidBody->getMotionState()->getWorldTransform(trans);
-
-            std::cout << "sphere height: " << trans.getOrigin().getY() << std::endl;
-        }
-
-        dynamicsWorld->removeRigidBody(fallRigidBody);
-        delete fallRigidBody->getMotionState();
-        delete fallRigidBody;
-
-        dynamicsWorld->removeRigidBody(groundRigidBody);
-        delete groundRigidBody->getMotionState();
-        delete groundRigidBody;
-
-
-        delete fallShape;
-
-        delete groundShape;
-
-
-        delete dynamicsWorld;
-        delete solver;
-        delete collisionConfiguration;
-        delete dispatcher;
-        delete broadphase;
-
-        return 0;
+    return 0;
 }
