@@ -4,6 +4,8 @@
 #include "./h/Model.h"
 
 #include <cstdlib>
+#include <glm/gtc/type_ptr.hpp>
+
 
 using namespace glm;
 
@@ -44,16 +46,25 @@ Model::Model(std::string path, GLuint shade, bool affectedByPhysics,  bool tessa
 	colorData = colors;
 
 	transform = mat4(1);
+	position = vec3(1, 1, 1);
+	rotation = 0.0f;
+	m_scale  = vec3(1, 1, 1);
+
+	motionState    = nullptr;
+	collisionShape = nullptr;
+	rigidBody      = nullptr;
 
 	// Deaults to origin
-	btDefaultMotionState* motionState = new btDefaultMotionState();
+	motionState = new btDefaultMotionState();
 	// Assume Cube shape for collision
 	collisionShape = new btBoxShape(btVector3(1, 1, 1));
 	mass = 0;
-	btVector3 fallInertia(0, 0, 0);
-	collisionShape->calculateLocalInertia(mass, fallInertia);
-    btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, motionState, collisionShape, fallInertia);
-    rigidBody = new btRigidBody(fallRigidBodyCI);
+	friction = 0;
+	rollingFriction = 0;
+	resititution = 0;
+	configureRigidBody();
+
+	changeColor = false;
 }
 
 Model::~Model()
@@ -144,6 +155,39 @@ float Model::getMass()
 	return mass;
 }
 
+float Model::getFriction()
+{
+	return friction;
+}
+
+float Model::getRollingFriction()
+{
+	return rollingFriction;
+}
+
+float Model::getRestitution()
+{
+	return resititution;
+}
+
+vec3  Model::getPosition()
+{
+	return position;
+}
+vec3  Model::getScale()
+{
+	return m_scale;
+}
+float Model::getRotation()
+{
+	return rotation;
+}
+
+void Model::changeColorOnGround(bool c)
+{
+	changeColor = c;
+}
+
 void Model::setVertexData(GLfloat * data)
 {
 	shapeData = data;
@@ -162,16 +206,54 @@ void Model::setShader(GLuint shade)
 void Model::setTransform(mat4 trans)
 {
 	transform = trans;
+
+}
+
+void Model::setPosition(vec3 p)
+{
+	position = p;
+
+	delete motionState;
+	motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(position.x, position.y, position.z)));
+
+	configureRigidBody();
+}
+void Model::setRotation(float r)
+{
+	rotation = r;
+}
+void Model::setScale(vec3 s)
+{
+	m_scale = s;
 }
 
 void Model::setMass(float m)
 {
 	mass = m;
+	configureRigidBody();
+}
+
+void Model::setFriction(float f)
+{
+	friction = f;
+}
+
+void Model::setRollingFriction(float f)
+{
+	rollingFriction = f;
+}
+
+void Model::setRestitution(float r)
+{
+	resititution = r;
 }
 
 void Model::setCollisionShape(btCollisionShape * shape)
 {
+	delete collisionShape;
 	collisionShape = shape;
+
+	configureRigidBody();
 }
 
 void Model::initBuffers()
@@ -201,11 +283,26 @@ void Model::draw(Controls * controls)
 	{
 		mat4 viewMatrix = controls->getViewMatrix();
 
+		btTransform trans;
+       	motionState->getWorldTransform(trans);
+
+		mat4 m;
+
+		trans.getOpenGLMatrix(glm::value_ptr(m));
+
+		transform = scale(m, m_scale);
+
 		mat4 modelMatrix = transform;
 		
 		mat4 projectionMatrix = controls->getProjectionMatrix();
 
 		mat4 MVP = projectionMatrix * viewMatrix * transform;
+
+		// TODO: Make this dynamic, actually check collisions. This is a dirty fix
+		if (trans.getOrigin().getY() <= 1 && changeColor)
+		{
+			setColor(0.0f, 0.0f, 1.0f);
+		}
 
 		glUseProgram(shader);
 
@@ -233,7 +330,25 @@ void Model::draw(Controls * controls)
 	}
 }
 
-void Model::printNormals()
+void Model::configureRigidBody()
 {
-	
+	btVector3 fallInertia(0, 0, 0);
+	collisionShape->calculateLocalInertia(mass, fallInertia);
+    btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, motionState, collisionShape, fallInertia);
+    fallRigidBodyCI.m_friction = friction;
+    fallRigidBodyCI.m_restitution = resititution;
+    fallRigidBodyCI.m_rollingFriction = rollingFriction;
+   	
+    delete rigidBody;
+    rigidBody = new btRigidBody(fallRigidBodyCI);
+}
+
+void Model::calcTriangleCollisionMesh()
+{
+	btTriangleMesh * mesh = new btTriangleMesh();
+
+	for (int i = 0; i < faceCount; i++)
+	{
+		btVector3 a(shapeData[i], shapeData[i+1], shapeData[i+2]);
+	}
 }

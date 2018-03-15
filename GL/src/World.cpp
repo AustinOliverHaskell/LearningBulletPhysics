@@ -87,6 +87,7 @@ World::~World()
 {
 	for (auto it = objects.begin(); it != objects.end(); it++)
 	{
+		dynamicsWorld->removeRigidBody((*it)->getRigidBody());
 		delete *it;
 	}
 
@@ -114,13 +115,14 @@ void World::setBackgroundColor(float r, float g, float b)
 
 void World::render()
 {
+    dynamicsWorld->stepSimulation(1.0f / 60.f);
+
 	// Clear the screen
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	controls->computeMatrices();
 
 	// Use our shader
-	// 
 	glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 
 	if (glfwGetKey( window, GLFW_KEY_Q) == GLFW_PRESS)

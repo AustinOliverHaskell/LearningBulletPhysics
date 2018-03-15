@@ -31,19 +31,37 @@ class Model
 		GLfloat * getColorData();
 		uint getFaceCount();
 
+		vec3 getPosition();
+		vec3 getScale();
+		float getRotation();
+
 		btRigidBody * getRigidBody();
 		float getMass();
+		float getFriction();
+		float getRollingFriction();
+		float getRestitution();
 		// -------------------
 
 		// ----- Setters -----
 		void setColor(float r, float g, float b);
 		void randomizeColor();
+		void changeColorOnGround(bool c);
+
+
 		void setTransform(mat4 trans);
+		void setPosition(vec3 p);
+		void setRotation(float r);
+		void setScale(vec3 s);
+
+
 		void setShader(GLuint shade);
 
 
 		void setCollisionShape(btCollisionShape * shape);
 		void setMass(float m);
+		void setFriction(float f);
+		void setRollingFriction(float f);
+		void setRestitution(float r);
 		// -------------------
 
 		// ----- Draw -----
@@ -54,6 +72,7 @@ class Model
 		// ----- Other -----
 		std::string toString();
 		void printNormals();
+		void calcTriangleCollisionMesh();
 		// -----------------
 
 	private:
@@ -66,6 +85,10 @@ class Model
 		GLuint normals;
 
 		mat4 transform;
+
+		vec3 position;
+		vec3 m_scale;
+		float rotation;
 
 		GLuint MatrixID;
 		GLuint ViewMatrixID;
@@ -88,6 +111,13 @@ class Model
 		// Motion State
 		btDefaultMotionState* motionState;
 
+		void configureRigidBody();
+
 		float mass;
+		float friction;
+		float rollingFriction;
+		float resititution;
+
+		bool changeColor;
 		// -----------------------------
 };

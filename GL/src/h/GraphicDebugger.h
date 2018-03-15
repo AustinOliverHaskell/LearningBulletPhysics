@@ -28,6 +28,11 @@ public:
 		}
 	}
 
+	int getFPS()
+	{
+		return fps;
+	}
+
 
 private:
 	int fps;
