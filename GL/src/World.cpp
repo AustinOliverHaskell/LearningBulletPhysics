@@ -85,11 +85,13 @@ World::World()
 }
 World::~World()
 {
+	cout << "Items in world at destruction: "<< objects.size() << endl;
 	for (auto it = objects.begin(); it != objects.end(); it++)
 	{
 		dynamicsWorld->removeRigidBody((*it)->getRigidBody());
 		delete *it;
 	}
+
 
 	delete broadphase;
 	delete collisionConfiguration;

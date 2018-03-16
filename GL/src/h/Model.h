@@ -16,7 +16,7 @@ using namespace glm;
 class Model
 {
 	public:
-		Model(Model &m);
+		Model(Model * m);
 		Model(std::string path, GLuint shade, bool affectedByPhysics, bool tessalate = false);
 
 		~Model();
@@ -29,13 +29,19 @@ class Model
 		// ----- Getters -----
 		GLfloat * getShapeData();
 		GLfloat * getColorData();
+		GLfloat * getNormalData();
+		GLuint getShader();
+
 		uint getFaceCount();
+		uint getVertexCount();
 
 		vec3 getPosition();
 		vec3 getScale();
 		float getRotation();
+		mat4 getTransform();
 
 		btRigidBody * getRigidBody();
+		btCollisionShape * getCollisionShape();
 		float getMass();
 		float getFriction();
 		float getRollingFriction();
@@ -76,6 +82,8 @@ class Model
 		// -----------------
 
 	private:
+		bool isCopy;
+
 		GLfloat * shapeData;
 		GLfloat * colorData;
 		GLfloat * normalData;
@@ -99,6 +107,8 @@ class Model
 		bool setupComplete;
 
 		uint faceCount;
+		uint vertexCount;
+
 
 		// ----- Physics Variables -----
 		
@@ -119,5 +129,6 @@ class Model
 		float resititution;
 
 		bool changeColor;
+
 		// -----------------------------
 };

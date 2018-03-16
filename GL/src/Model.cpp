@@ -4,16 +4,61 @@
 #include "./h/Model.h"
 
 #include <cstdlib>
+#include <vector>
 #include <glm/gtc/type_ptr.hpp>
 
 
 using namespace glm;
 
-Model::Model(Model &m)
+Model::Model(Model * m)
 {
-	shapeData = m.getShapeData();
-	colorData = m.getColorData();
-	faceCount = m.getFaceCount();
+	vertexCount = m->getVertexCount();
+	faceCount = m->getFaceCount();
+
+	vector <GLfloat> * sData = new vector<GLfloat>();
+	vector <GLfloat> * nData = new vector<GLfloat>();
+	vector <GLfloat> * cData = new vector<GLfloat>();
+
+	GLfloat * otherShapeData = m->getShapeData();
+	GLfloat * otherNormalData = m->getNormalData();
+	GLfloat * otherColorData = m->getColorData();
+
+	for (uint i = 0; i < vertexCount; i++)
+	{
+		sData->push_back(otherShapeData[i]);
+		nData->push_back(otherNormalData[i]);
+		cData->push_back(otherColorData[i]);
+	}
+
+	shapeData = sData->data();
+	colorData = cData->data();
+	normalData = nData->data();
+
+	transform = m->getTransform();
+
+	position = m->getPosition();
+	m_scale  = m->getScale();
+	rotation = m->getRotation();
+
+	shader = m->getShader();		
+
+	
+	collisionShape = m->getCollisionShape();
+	motionState = new btDefaultMotionState();
+	rigidBody = nullptr;
+
+	mass = m->getMass();
+	friction = m->getFriction();
+	rollingFriction = m->getRollingFriction();
+	resititution = m->getRestitution();
+
+	changeColor = false;
+	isCopy = true;
+
+	initBuffers();
+	configureRigidBody();
+
+
 }
 
 Model::Model(std::string path, GLuint shade, bool affectedByPhysics,  bool tessalate)
@@ -30,6 +75,8 @@ Model::Model(std::string path, GLuint shade, bool affectedByPhysics,  bool tessa
 	shapeData = file->getObjectData();
 
 	normalData = file->getNormals();
+
+	vertexCount = file->getVertexCount();
 
 	shader = shade;
 
@@ -65,6 +112,7 @@ Model::Model(std::string path, GLuint shade, bool affectedByPhysics,  bool tessa
 	configureRigidBody();
 
 	changeColor = false;
+	isCopy = false;
 }
 
 Model::~Model()
@@ -75,9 +123,42 @@ Model::~Model()
 		glDeleteBuffers(1, &colors);
 	}
 
-	delete collisionShape;
-	delete motionState;
-	delete rigidBody;
+	if (collisionShape != nullptr && !isCopy)
+	{
+		delete collisionShape;
+		collisionShape = nullptr;
+	}
+
+	if (motionState != nullptr)
+	{
+		delete motionState;
+		motionState = nullptr;
+	}
+
+	if (rigidBody != nullptr)
+	{
+		delete rigidBody;
+		rigidBody = nullptr;
+	}
+
+
+	if (shapeData != nullptr)
+	{
+		delete shapeData;
+		shapeData = nullptr;
+	}
+
+	if (colorData != nullptr)
+	{
+		delete colorData;
+		colorData = nullptr;
+	}
+
+	if (normalData != nullptr)
+	{
+		delete normalData;
+		normalData = nullptr;
+	}
 }
 
 GLfloat * Model::getShapeData()
@@ -88,6 +169,11 @@ GLfloat * Model::getShapeData()
 GLfloat * Model::getColorData()
 {
 	return colorData;
+}
+
+GLfloat * Model::getNormalData()
+{
+	return normalData;
 }
 
 
@@ -145,9 +231,25 @@ uint Model::getFaceCount()
 	return faceCount;
 }
 
+uint Model::getVertexCount()
+{
+	return vertexCount;
+}
+
+GLuint Model::getShader()
+{
+	return shader;
+}
+
+
 btRigidBody * Model::getRigidBody()
 {
 	return rigidBody;
+}
+
+btCollisionShape * Model::getCollisionShape()
+{
+	return collisionShape;
 }
 
 float Model::getMass()
@@ -183,6 +285,11 @@ float Model::getRotation()
 	return rotation;
 }
 
+mat4 Model::getTransform()
+{
+	return transform;
+}
+
 void Model::changeColorOnGround(bool c)
 {
 	changeColor = c;
@@ -213,7 +320,11 @@ void Model::setPosition(vec3 p)
 {
 	position = p;
 
-	delete motionState;
+	if (motionState != nullptr)
+	{
+		delete motionState;
+	}
+	
 	motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(position.x, position.y, position.z)));
 
 	configureRigidBody();
@@ -347,8 +458,21 @@ void Model::calcTriangleCollisionMesh()
 {
 	btTriangleMesh * mesh = new btTriangleMesh();
 
-	for (int i = 0; i < faceCount; i++)
+	for (uint i = 0; i < vertexCount; i+=9)
 	{
 		btVector3 a(shapeData[i], shapeData[i+1], shapeData[i+2]);
+		btVector3 b(shapeData[i+3], shapeData[i+4], shapeData[i+5]);
+		btVector3 c(shapeData[i+6], shapeData[i+7], shapeData[i+8]);
+
+		mesh->addTriangle(a, b, c);
 	}
+
+	btConvexTriangleMeshShape * meshCollision = new btConvexTriangleMeshShape(mesh);
+
+	collisionShape = meshCollision;
+
+	collisionShape->setLocalScaling(btVector3(m_scale.x, m_scale.y, m_scale.z));
+
+	configureRigidBody();
+
 }

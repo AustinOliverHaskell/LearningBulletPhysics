@@ -51,7 +51,7 @@ int main (int argc, char * argv[])
     plane->setColor(1.0f, 0.5f, 0.25f);
     light->setColor(1.0f, 1.0f, 1.0f);
 
-    object->setMass(1);
+    object->setMass(50);
     sphere->setMass(1);
     cube->setMass(0.5);
     cube2->setMass(0.5);
@@ -60,17 +60,16 @@ int main (int argc, char * argv[])
     sphere->setFriction(0.1f);
     cube->setFriction(0.1);
     cube2->setFriction(0.1);
-    plane->setFriction(1.0f);
+    plane->setFriction(2.0f);
 
     object->setRollingFriction(0.01f);
-    sphere->setRollingFriction(0.01f);
+    sphere->setRollingFriction(0.05f);
 
     object->setRestitution(1.5);
     cube->setRestitution(3);
 
     plane->setCollisionShape(new btStaticPlaneShape(btVector3(0, 1, 0), 0));
-    object->setCollisionShape(new btSphereShape(1));
-    sphere->setCollisionShape(new btSphereShape(1));
+    sphere->setCollisionShape(new btSphereShape(0.5));
     cube2->setCollisionShape(new btBoxShape(btVector3(2, 2, 2)));
     // Cube will just use the defaults
 
@@ -83,6 +82,10 @@ int main (int argc, char * argv[])
 
     plane->setScale(vec3(30.0f, 0.0f, 30.0f));
     cube2->setScale(vec3(2.0f, 2.0f, 2.0f));
+    sphere->setScale(vec3(0.5f, 0.5f, 0.5f));
+    object->setScale(vec3(2.0f, 2.0f, 2.0f));
+
+    object->calcTriangleCollisionMesh();
 
     // Add them to the scene
     world->addModel(object);
@@ -91,6 +94,8 @@ int main (int argc, char * argv[])
     world->addModel(sphere);
     world->addModel(cube);
     world->addModel(cube2);
+    //
+
 
     // Set Backgrond to black
     world->setBackgroundColor(0.0f, 0.0f, 0.0f);
@@ -98,6 +103,18 @@ int main (int argc, char * argv[])
     // Render
     while(glfwGetKey(world->getWindow(), GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(world->getWindow()) == 0 )
     {
+        if (glfwGetKey(world->getWindow(), GLFW_KEY_I) == GLFW_PRESS)
+        {
+            float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+            float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+            float z = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+
+            Model * temp = new Model(sphere);
+            temp->setPosition(vec3(x, 100.0f + y, z));
+            temp->setColor(x, y, z);
+            world->addModel(temp);
+        }
+
         world->render();
     }
 
