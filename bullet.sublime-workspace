@@ -4,6 +4,90 @@
 		"selected_items":
 		[
 			[
+				"mesh",
+				"meshCollision"
+			],
+			[
+				"is",
+				"isCopy"
+			],
+			[
+				"other",
+				"otherColorData"
+			],
+			[
+				"getNor",
+				"getNormalData"
+			],
+			[
+				"Ve",
+				"vector"
+			],
+			[
+				"norm",
+				"normalData"
+			],
+			[
+				"color",
+				"colorData"
+			],
+			[
+				"getS",
+				"getShapeData"
+			],
+			[
+				"GL",
+				"GLfloat"
+			],
+			[
+				"vec",
+				"vector\tstd::vector"
+			],
+			[
+				"getRo",
+				"getRollingFriction"
+			],
+			[
+				"get",
+				"getShader"
+			],
+			[
+				"getNo",
+				"getNormalData"
+			],
+			[
+				"nor",
+				"normalData"
+			],
+			[
+				"setRo",
+				"setRollingFriction"
+			],
+			[
+				"GLF",
+				"GLFW_PRESS"
+			],
+			[
+				"arg",
+				"argv\t(main.cpp)"
+			],
+			[
+				"mes",
+				"meshCollision"
+			],
+			[
+				"shape",
+				"shapeData"
+			],
+			[
+				"setCo",
+				"setCollisionShape"
+			],
+			[
+				"trans",
+				"transform"
+			],
+			[
 				"cube",
 				"cube.obj"
 			],
@@ -14,14 +98,6 @@
 			[
 				"ran",
 				"randomizeColor"
-			],
-			[
-				"trans",
-				"translate"
-			],
-			[
-				"get",
-				"getOrigin"
 			],
 			[
 				"po",
@@ -84,10 +160,6 @@
 				"ModelMatrixID"
 			],
 			[
-				"GL",
-				"GLuint"
-			],
-			[
 				"camer",
 				"cameraLocked"
 			],
@@ -102,10 +174,6 @@
 			[
 				"point",
 				"pointAlongLine"
-			],
-			[
-				"is",
-				"isCovered\t(Triangle.java)"
 			],
 			[
 				"tet",
@@ -180,10 +248,6 @@
 				"StringBuilder\t(Vec3.java)"
 			],
 			[
-				"norm",
-				"normals"
-			],
-			[
 				"tri",
 				"triVerticies"
 			],
@@ -244,20 +308,12 @@
 				"projectionMatrix"
 			],
 			[
-				"color",
-				"colorViewMatrixID"
-			],
-			[
 				"edg",
 				"edgeOne"
 			],
 			[
 				"pos",
 				"position"
-			],
-			[
-				"nor",
-				"normalize"
 			],
 			[
 				"shar",
@@ -458,62 +514,6 @@
 			[
 				"S",
 				"SPADES"
-			],
-			[
-				"HEARTS",
-				"HEARTS"
-			],
-			[
-				"ge",
-				"genes"
-			],
-			[
-				"String",
-				"StringBuilder"
-			],
-			[
-				"st",
-				"startPoint"
-			],
-			[
-				"x",
-				"xSize"
-			],
-			[
-				"ySize",
-				"ySize-1"
-			],
-			[
-				"flood",
-				"floodFill"
-			],
-			[
-				"has",
-				"hasBlue"
-			],
-			[
-				"start",
-				"startY"
-			],
-			[
-				"sta",
-				"startY"
-			],
-			[
-				"y",
-				"ySize"
-			],
-			[
-				"val",
-				"validEnd"
-			],
-			[
-				"mutat",
-				"mutationRate"
-			],
-			[
-				"chara",
-				"characteristicDigitCount"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 3321,
+				"buffer_size": 4330,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -532,7 +532,7 @@
 			"file": "GL/src/World.cpp",
 			"settings":
 			{
-				"buffer_size": 3495,
+				"buffer_size": 3565,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -550,7 +550,7 @@
 			"file": "GL/src/h/Model.h",
 			"settings":
 			{
-				"buffer_size": 2110,
+				"buffer_size": 2478,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -559,7 +559,7 @@
 			"file": "GL/src/Model.cpp",
 			"settings":
 			{
-				"buffer_size": 6764,
+				"buffer_size": 9298,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -627,6 +627,9 @@
 	],
 	"file_history":
 	[
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/FileLoader.h",
+		"/home/austin/Documents/Bit_Bashing_Example.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/GraphicDebugger.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/defs.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/helloWorldExample.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Controls.cpp",
@@ -751,14 +754,11 @@
 		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/compiled/log.txt",
 		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/compiled/obj/random_test.obj",
 		"/home/austin/Desktop/test.cpp",
-		"/home/austin/Desktop/AustinShellOS/AustinShell.c",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/compiled/test.obj",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/makefile.make",
-		"/home/austin/Desktop/DeckProject.txt"
+		"/home/austin/Desktop/AustinShellOS/AustinShell.c"
 	],
 	"find":
 	{
-		"height": 37.0
+		"height": 36.0
 	},
 	"find_in_files":
 	{
@@ -825,7 +825,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -834,15 +834,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3321,
+						"buffer_size": 4330,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2865,
-								2865
+								2951,
+								2951
 							]
 						],
 						"settings":
@@ -854,10 +854,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 270.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -866,15 +866,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3495,
+						"buffer_size": 3565,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3334,
-								3334
+								422,
+								422
 							]
 						],
 						"settings":
@@ -888,7 +888,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -928,15 +928,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2110,
+						"buffer_size": 2478,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2018,
-								2018
+								1750,
+								1750
 							]
 						],
 						"settings":
@@ -947,10 +947,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 900.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -959,15 +959,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6764,
+						"buffer_size": 9298,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5666,
-								5666
+								391,
+								391
 							]
 						],
 						"settings":
@@ -978,10 +978,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3703.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -1064,7 +1064,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 113.0,
+	"side_bar_width": 244.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
