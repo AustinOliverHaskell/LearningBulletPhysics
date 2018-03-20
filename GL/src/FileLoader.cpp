@@ -21,6 +21,8 @@ FileLoader::~FileLoader()
 
 GLfloat * FileLoader::getObjectData()
 {
+	// TODO: These should return copies so that the vector can be 
+	//  deleted cleanly.
 	return &verticies[0];
 }
 

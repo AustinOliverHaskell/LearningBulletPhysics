@@ -1,7 +1,4 @@
 #include "./h/glHeader.h"
-#include "./h/shapeData.h"
-#include "./h/Cube.h"
-#include "./h/Plane.h"
 #include "./h/Controls.h"
 #include "./h/defs.h"
 #include "./h/FileLoader.h"
@@ -46,7 +43,8 @@ void Graphics::openWindow()
 	window = glfwCreateWindow( WINDOW_WIDTH, WINDOW_HEIGHT, windowName.c_str(), NULL, NULL);
 
 	// Check to make sure that the window handle was created succesfully
-	if( window == NULL ){
+	if( window == NULL )
+	{
 		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
 		glfwTerminate();
 		return;

@@ -4,6 +4,7 @@
 #include "./GL/src/h/World.h"
 #include "./GL/src/h/Model.h"
 #include "./GL/src/h/defs.h"
+#include "./GL/src/h/Structure.h"
 
 int main (int argc, char * argv[])
 {
@@ -28,12 +29,13 @@ int main (int argc, char * argv[])
     world->setLightPos(lightPosition);
 
     // Models in our scene, the plane needs to have its normals calculated
-    Model * object = new Model("./GL/src/obj/Object.obj", shader, true);
-    Model * sphere = new Model("./GL/src/obj/sphere.obj", shader, true);
-    Model * cube   = new Model("./GL/src/obj/cube.obj", shader, true);
-    Model * cube2  = new Model("./GL/src/obj/cube.obj", shader, true);
-    Model * plane  = new Model("./GL/src/obj/plane.obj",  solidShader, false, true);
-    Model * light  = new Model("./GL/src/obj/cube.obj", solidShader, false);
+    Model * object = new Model("./GL/src/obj/Object.obj", solidShader);
+    Model * sphere = new Model("./GL/src/obj/sphere.obj", solidShader);
+    Model * cube   = new Model("./GL/src/obj/cube.obj", solidShader);
+    Model * cube2  = new Model("./GL/src/obj/cube.obj", solidShader);
+    Model * plane  = new Model("./GL/src/obj/plane.obj",  solidShader, true);
+    Model * light  = new Model("./GL/src/obj/cube.obj", solidShader);
+    Structure * s  = new Structure("./GL/src/obj/Object.obj", solidShader);
 
     // Initilize our buffers
     object->initBuffers();
@@ -88,6 +90,7 @@ int main (int argc, char * argv[])
     sphere->setScale(vec3(0.5f, 0.5f, 0.5f));
     object->setScale(vec3(2.0f, 2.0f, 2.0f));
 
+
     // This one needs a special mesh, the meshes are slower but model
     //  the object much better
     object->calcTriangleCollisionMesh();
@@ -95,10 +98,12 @@ int main (int argc, char * argv[])
     // Add them to the scene
     world->addModel(object);
     world->addModel(plane);
-    world->addModel(light);
-    world->addModel(sphere);
-    world->addModel(cube);
-    world->addModel(cube2);
+    //world->addModel(light);
+    //world->addModel(sphere);
+    //world->addModel(cube);
+    //world->addModel(cube2);
+    
+    s->addToWorld(world);
 
     // Set Backgrond to black
     world->setBackgroundColor(0.0f, 0.0f, 0.0f);

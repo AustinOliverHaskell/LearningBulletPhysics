@@ -1,14 +1,15 @@
 #include "./h/FileLoader.h"
-#include "./h/shapeData.h"
 #include "./h/Controls.h"
+#include "./h/PointCloud.h"
 #include "./h/Model.h"
 
 #include <cstdlib>
 #include <vector>
 #include <glm/gtc/type_ptr.hpp>
 
-
 using namespace glm;
+
+// TODO: Add comments
 
 Model::Model(Model * m)
 {
@@ -57,11 +58,41 @@ Model::Model(Model * m)
 
 	initBuffers();
 	configureRigidBody();
-
-
 }
 
-Model::Model(std::string path, GLuint shade, bool affectedByPhysics,  bool tessalate)
+Model::Model(PointCloud p, GLuint shade)
+{
+	shapeData  = p.getVertexData();
+	colorData  = p.getColorData();
+	normalData = p.getNormalData();
+
+	transform = mat4(1);
+
+	mass = 0;
+	friction = 0;
+	rollingFriction = 0;
+	resititution = 0;
+
+	changeColor = false;
+	isCopy = false;
+
+	position = vec3(1, 1, 1);
+	m_scale  = vec3(1, 1, 1);
+	rotation = 0.0f;
+
+	shader = shade;
+
+	motionState = new btDefaultMotionState();
+	collisionShape = nullptr;
+	rigidBody = nullptr;
+
+	initBuffers();
+
+	// Calls configureRigidBody internally
+	calcTriangleCollisionMesh();
+}
+
+Model::Model(std::string path, GLuint shade,  bool tessalate)
 {
 	FileLoader * file = new FileLoader();
 
@@ -70,12 +101,9 @@ Model::Model(std::string path, GLuint shade, bool affectedByPhysics,  bool tessa
 		std::cout << "Filed to load file: " << path << std::endl;
 	}
 
-	faceCount = file->getFaceCount();
-
-	shapeData = file->getObjectData();
-
-	normalData = file->getNormals();
-
+	faceCount   = file->getFaceCount();
+	shapeData   = file->getObjectData();
+	normalData  = file->getNormals();
 	vertexCount = file->getVertexCount();
 
 	shader = shade;
@@ -93,9 +121,9 @@ Model::Model(std::string path, GLuint shade, bool affectedByPhysics,  bool tessa
 	colorData = colors;
 
 	transform = mat4(1);
-	position = vec3(1, 1, 1);
-	rotation = 0.0f;
-	m_scale  = vec3(1, 1, 1);
+	position  = vec3(1, 1, 1);
+	rotation  = 0.0f;
+	m_scale   = vec3(1, 1, 1);
 
 	motionState    = nullptr;
 	collisionShape = nullptr;
@@ -468,6 +496,11 @@ void Model::calcTriangleCollisionMesh()
 	}
 
 	btConvexTriangleMeshShape * meshCollision = new btConvexTriangleMeshShape(mesh);
+
+	if (collisionShape != nullptr)
+	{
+		delete collisionShape;
+	}
 
 	collisionShape = meshCollision;
 

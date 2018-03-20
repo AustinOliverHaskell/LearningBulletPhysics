@@ -2,6 +2,7 @@
 
 #include "glHeader.h"
 #include "Controls.h"
+#include "PointCloud.h"
 
 #include <btBulletDynamicsCommon.h>
 #include <iostream>
@@ -17,7 +18,8 @@ class Model
 {
 	public:
 		Model(Model * m);
-		Model(std::string path, GLuint shade, bool affectedByPhysics, bool tessalate = false);
+		Model(PointCloud p, GLuint shade);
+		Model(std::string path, GLuint shade, bool tessalate = false);
 
 		~Model();
 
