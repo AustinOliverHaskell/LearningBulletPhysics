@@ -67,10 +67,8 @@ glm::vec3 FileLoader::calcNormal(glm::vec3 one, glm::vec3 two, glm::vec3 three)
 
 	// Cross Product
 	retVal = glm::cross(edgeOne, edgeTwo);
-
 	
 	retVal = normalize(retVal);
-	
 
 	return retVal;
 }
@@ -95,7 +93,7 @@ bool FileLoader::openFile(string path, bool tesselate)
 {
 	bool retVal = true;
 
-	cout << "Object :" << path << endl;
+	cout << "Loading Object " << path << " ... ";
 
 	ifstream in;
 
@@ -150,10 +148,7 @@ bool FileLoader::openFile(string path, bool tesselate)
 			normals.push_back(model.normal[norPos+1]);
 			normals.push_back(model.normal[norPos+2]);
 
-			if (path == "./obj/cube.obj")
-			{
-				cout << model.normal[norPos] << " " << model.normal[norPos+1] << " " << model.normal[norPos + 2] << endl;
-			}
+			
 		}
 	}
 
@@ -193,14 +188,10 @@ bool FileLoader::openFile(string path, bool tesselate)
 			normals.push_back(point.y);
 			normals.push_back(point.z);
 
-			cout << point.x << " " << point.y << " "<< point.z << endl;
-			cout << point.x << " " << point.y << " "<< point.z << endl;
-			cout << point.x << " " << point.y << " "<< point.z << endl;
-
 		}
 	}
 
-
+	cout << "Done! " << endl;
 
 	return retVal;
 }

@@ -7,12 +7,12 @@
 #include "./h/GraphicDebugger.h"
 #include "./h/Model.h"
 #include "./h/World.h"
+#include "./h/c_DebugDraw.h"
+#include "./h/Structure.h"
 
 #include <btBulletDynamicsCommon.h>
 
-
 using namespace glm;
-
 
 World::World()
 {
@@ -82,22 +82,32 @@ World::World()
 
     dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
 
+    debugdrawer  = new BulletDebugDrawer_OpenGL();
+    
+	debugdrawer->setDebugMode( btIDebugDraw::DBG_DrawWireframe);
+
+	dynamicsWorld->setDebugDrawer(debugdrawer);
+
+	// This is a quick fix for the debug drawer
+	defaultShader = loadShaders("./GL/src/shaders/SimpleVertexShader.vertexshader", "./GL/src/shaders/SimpleFragmentShader.fragmentshader");
+
+	debugdrawer->init(controls, defaultShader);
 }
 World::~World()
 {
-	cout << "Items in world at destruction: "<< objects.size() << endl;
+	cout << "Items in world at destruction: "<< objects.size() + structures.size() << endl;
 	for (auto it = objects.begin(); it != objects.end(); it++)
 	{
 		dynamicsWorld->removeRigidBody((*it)->getRigidBody());
 		delete *it;
 	}
 
-
 	delete broadphase;
 	delete collisionConfiguration;
 	delete dispatcher;
 	delete solver;
-	delete dynamicsWorld;
+	// TODO: figure out why this line is causing a segfault
+	//delete dynamicsWorld;
 }
 
 void World::setLight(GLuint light)
@@ -117,12 +127,13 @@ void World::setBackgroundColor(float r, float g, float b)
 
 void World::render()
 {
+	controls->computeMatrices();
+
     dynamicsWorld->stepSimulation(1.0f / 60.f);
 
 	// Clear the screen
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	controls->computeMatrices();
 
 	// Use our shader
 	glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
@@ -131,11 +142,18 @@ void World::render()
 	{
 		debugger->showFPS();
 	}
-
+	
+	dynamicsWorld->debugDrawWorld();
+	debugdrawer->draw();
 
 	for (auto it = objects.begin(); it != objects.end(); it++)
 	{
 		(*it)->draw(controls);
+	}
+
+	for (auto it = structures.begin(); it != structures.end(); it++)
+	{
+		(*it)->render(controls);
 	}
 
 	// Swap buffers
@@ -147,6 +165,17 @@ void World::addModel(Model* m)
 {
 	objects.push_back(m);
 	dynamicsWorld->addRigidBody(m->getRigidBody());
+}
+
+void World::addStructure(Structure * structure)
+{
+	structures.push_back(structure);
+	dynamicsWorld->addRigidBody(structure->getRigidBody());
+}
+
+btDynamicsWorld * World::getDynamicsWorld()
+{
+	return dynamicsWorld;
 }
 
 GLFWwindow* World::getWindow()

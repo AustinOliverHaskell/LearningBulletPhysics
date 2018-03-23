@@ -74,6 +74,7 @@ class Model
 
 		// ----- Draw -----
 		void draw(Controls * controls);
+		void transformDraw(Controls * controls, btTransform trans);
 		void initBuffers();
 		// ----------------
 
@@ -81,6 +82,7 @@ class Model
 		std::string toString();
 		void printNormals();
 		void calcTriangleCollisionMesh();
+		void configureRigidBody();
 		// -----------------
 
 	private:
@@ -123,7 +125,6 @@ class Model
 		// Motion State
 		btDefaultMotionState* motionState;
 
-		void configureRigidBody();
 
 		float mass;
 		float friction;

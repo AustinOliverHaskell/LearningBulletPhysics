@@ -65,9 +65,11 @@ Model::Model(PointCloud p, GLuint shade)
 	shapeData  = p.getVertexData();
 	colorData  = p.getColorData();
 	normalData = p.getNormalData();
+	vertexCount = p.getVertexCount();
+
+	faceCount = vertexCount / 9;
 
 	transform = mat4(1);
-
 	mass = 0;
 	friction = 0;
 	rollingFriction = 0;
@@ -90,6 +92,8 @@ Model::Model(PointCloud p, GLuint shade)
 
 	// Calls configureRigidBody internally
 	calcTriangleCollisionMesh();
+
+
 }
 
 Model::Model(std::string path, GLuint shade,  bool tessalate)
@@ -397,6 +401,7 @@ void Model::setCollisionShape(btCollisionShape * shape)
 
 void Model::initBuffers()
 {
+	// Set up the uniforms
 	MatrixID      = glGetUniformLocation(shader, "MVP");
     ViewMatrixID  = glGetUniformLocation(shader,   "V");
     ModelMatrixID = glGetUniformLocation(shader,   "M");
@@ -404,6 +409,18 @@ void Model::initBuffers()
 	glGenBuffers(1, &verticies);
 	glBindBuffer(GL_ARRAY_BUFFER, verticies);
 	glBufferData(GL_ARRAY_BUFFER, faceCount * sizeof(vec3) * 3, shapeData, GL_STATIC_DRAW);
+
+	GLenum err = glGetError();
+
+	if (err != GL_NO_ERROR)
+	{
+		//cerr << "Error in Model::initBuffers: " << err << endl;
+	}
+
+	for (uint i = 0; i < faceCount * sizeof(vec3) * 3; i++)
+	{
+		//cout << shapeData[i] << endl;
+	}
 
 	glGenBuffers(1, &colors);
 	glBindBuffer(GL_ARRAY_BUFFER, colors);
@@ -413,6 +430,7 @@ void Model::initBuffers()
 	glBindBuffer(GL_ARRAY_BUFFER, normals);
 	glBufferData(GL_ARRAY_BUFFER, faceCount * sizeof(vec3) * 3, normalData, GL_STATIC_DRAW);
 
+	// Done with setup, this boolean lets the destructor know what it should free up
 	setupComplete = true;
 }
 
@@ -469,6 +487,50 @@ void Model::draw(Controls * controls)
 	}
 }
 
+void Model::transformDraw(Controls * controls, btTransform trans)
+{
+	if (setupComplete)
+	{
+		mat4 viewMatrix = controls->getViewMatrix();
+
+		mat4 m;
+
+		trans.getOpenGLMatrix(glm::value_ptr(m));
+
+		transform = scale(m, m_scale);
+
+		mat4 modelMatrix = transform;
+		
+		mat4 projectionMatrix = controls->getProjectionMatrix();
+
+		mat4 MVP = projectionMatrix * viewMatrix * transform;
+
+		glUseProgram(shader);
+
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &modelMatrix[0][0]);
+		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &viewMatrix[0][0]);
+
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, verticies); 
+		glVertexAttribPointer(0, 3, GL_FLOAT,GL_FALSE,  0, (void*)0);
+
+		glEnableVertexAttribArray(1);
+		glBindBuffer(GL_ARRAY_BUFFER, colors);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+		glEnableVertexAttribArray(2);
+ 		glBindBuffer(GL_ARRAY_BUFFER, normals);
+ 		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+		glDrawArrays(GL_TRIANGLES, 0, sizeof(vec3)*faceCount*3);
+
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
+	}
+}
+
 void Model::configureRigidBody()
 {
 	btVector3 fallInertia(0, 0, 0);
@@ -478,7 +540,12 @@ void Model::configureRigidBody()
     fallRigidBodyCI.m_restitution = resititution;
     fallRigidBodyCI.m_rollingFriction = rollingFriction;
    	
-    delete rigidBody;
+    if (rigidBody != nullptr)
+	{
+		delete rigidBody;
+		rigidBody = nullptr;
+	}
+
     rigidBody = new btRigidBody(fallRigidBodyCI);
 }
 
@@ -486,20 +553,32 @@ void Model::calcTriangleCollisionMesh()
 {
 	btTriangleMesh * mesh = new btTriangleMesh();
 
+	//cout << " ----- ----- Mesh ----- ----- " << endl;
+
 	for (uint i = 0; i < vertexCount; i+=9)
 	{
 		btVector3 a(shapeData[i], shapeData[i+1], shapeData[i+2]);
 		btVector3 b(shapeData[i+3], shapeData[i+4], shapeData[i+5]);
 		btVector3 c(shapeData[i+6], shapeData[i+7], shapeData[i+8]);
 
+		/*cout << "Triangle" << endl;
+		cout << " ----- " << endl;
+		cout << "[" << shapeData[i] << ", " << shapeData[i+1] << "," << shapeData[i+2] << "]" << endl;
+		cout << "[" << shapeData[i+3] << ", " << shapeData[i+4] << "," << shapeData[i+5] << "]" << endl;
+		cout << "[" << shapeData[i+6] << ", " << shapeData[i+7] << "," << shapeData[i+8] << "]" << endl;*/
+
+
 		mesh->addTriangle(a, b, c);
 	}
+
+	//cout << " ----- ----- ----- ----- ----- " << endl;
 
 	btConvexTriangleMeshShape * meshCollision = new btConvexTriangleMeshShape(mesh);
 
 	if (collisionShape != nullptr)
 	{
 		delete collisionShape;
+		collisionShape = nullptr;
 	}
 
 	collisionShape = meshCollision;

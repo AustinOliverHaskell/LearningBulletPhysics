@@ -3,12 +3,15 @@
 #include <vector>
 #include <btBulletDynamicsCommon.h>
 
-
 #include "Model.h"
 #include "glHeader.h"
 #include "defs.h"
 #include "Controls.h"
 #include "GraphicDebugger.h"
+#include "c_DebugDraw.h"
+#include "Structure.h"
+
+class Structure;
 
 class World
 {
@@ -19,6 +22,8 @@ class World
 		void render();
 
 		void addModel(Model* m);
+		void addStructure(Structure * structure);
+
 
 		void setLight(GLuint light);
 		void setLightPos(vec3 pos);
@@ -26,10 +31,15 @@ class World
 
 		GLFWwindow* getWindow();
 
+		btDynamicsWorld * getDynamicsWorld();
+
+
 	private:
 
 		// ----- OpenGL -----
 		std::vector <Model*> objects;
+		std::vector <Structure*> structures;
+
 		GLFWwindow* window;
 
 		Controls * controls;
@@ -39,10 +49,10 @@ class World
 
 		vec3 lightPos;
 		GLuint LightID;
+
+		GLuint defaultShader;
 		// ------------------
-
-
-
+		
 
 		// ----- Physics -----
 		
@@ -56,4 +66,8 @@ class World
         btSequentialImpulseConstraintSolver *    solver;
         btDiscreteDynamicsWorld *                dynamicsWorld;
         // -------------------
+        
+        // ----- Debug -----
+        BulletDebugDrawer_OpenGL * debugdrawer;
+        // -----------------
 };	

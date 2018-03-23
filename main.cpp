@@ -96,14 +96,20 @@ int main (int argc, char * argv[])
     object->calcTriangleCollisionMesh();
 
     // Add them to the scene
-    world->addModel(object);
+    //world->addModel(object);
     world->addModel(plane);
     //world->addModel(light);
     //world->addModel(sphere);
     //world->addModel(cube);
     //world->addModel(cube2);
+    world->addStructure(s);
     
-    s->addToWorld(world);
+    /*vector <Model *> * models = s->getModels();
+
+    for (auto it = models->begin(); it != models->end(); it++)
+    {
+        world->addModel((*it));
+    }*/
 
     // Set Backgrond to black
     world->setBackgroundColor(0.0f, 0.0f, 0.0f);

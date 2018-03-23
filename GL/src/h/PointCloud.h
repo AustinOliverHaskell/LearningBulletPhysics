@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glHeader.h"
+#include "defs.h"
 
 #include <vector>
 
@@ -10,6 +11,7 @@ class PointCloud
 {
 	public:
 		PointCloud();
+		PointCloud(const PointCloud& other);
 		~PointCloud();
 
 		// ----- Getters -----
@@ -19,9 +21,13 @@ class PointCloud
 		//  is responsable for clearing out the data returned. The internal vectors
 		//  are cleared upon deletion of this object. 
 
-		GLfloat * getVertexData();
-		GLfloat * getColorData();
-		GLfloat * getNormalData();
+		GLfloat * getVertexData() const;
+		GLfloat * getColorData() const;
+		GLfloat * getNormalData() const;
+
+		uint getVertexCount() const; 
+		uint getColorCount() const;
+		uint getNormalCount() const;
 		// -------------------
 		
 		// ----- Setters -----
@@ -34,6 +40,8 @@ class PointCloud
 		void clearVertexData();
 		void clearColorData();
 		void clearNormalData();
+
+		glm::vec3 calcCenter();
 		// -----------------
 
 	private:

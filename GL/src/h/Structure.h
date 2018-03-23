@@ -11,9 +11,17 @@ class Structure
 		Structure(string path, GLuint shader);
 		~Structure();
 
-		void addToWorld(World * w );
+		btRigidBody * getRigidBody() {return rigidBody;}
+		void render(Controls * controls);
+
+		// For Debugging
+		vector<Model*> * getModels();
 
 	private:
 		vector <Model *> * models;
 		vector <PointCloud> * clouds;
+
+		btCompoundShape * shape;
+		btMotionState * motionState;
+		btRigidBody * rigidBody;
 };
