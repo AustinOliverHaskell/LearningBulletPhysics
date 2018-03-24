@@ -37,15 +37,6 @@ public:
 
     void draw()
     {
-/*        cout << " ----- Draw -----" << endl;
-
-        for (uint i = 0; i < points.size(); i+=6)
-        {
-            cout << "Line: [" << points[i] << ","<< points[i+1] << ","<< points[i+2] << " to ";
-            cout << points[i+3] << ","<< points[i+4] << ","<< points[i+5] <<"]" << endl;
-        }
-
-        cout << " ----------------" << endl;*/
         mat4 viewMatrix = controls->getViewMatrix();
 
         mat4 modelMatrix = mat4(1);
@@ -103,6 +94,8 @@ public:
         points.push_back(to.getY());
         points.push_back(to.getZ());        
     }
+
+    // TODO: Implement drawContactPoint();
     virtual void drawContactPoint(const btVector3 &, const btVector3 &, btScalar, int, const btVector3 &) {}
     virtual void reportErrorWarning(const char *) {}
     virtual void draw3dText(const btVector3 &, const char *) {}

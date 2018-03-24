@@ -20,10 +20,12 @@ Structure::Structure(string path, GLuint shader)
 	clouds = new vector<PointCloud>();
 
 	shape = new btCompoundShape();
-	motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0.0f, 5.0f, 0.0f)));
+	motionState = new btDefaultMotionState();
 
 	// Load Entire Model
 	FileLoader * f = new FileLoader();
+
+	btTransform t;
 
 	if (!f->openFile(path, false))
 	{
@@ -35,10 +37,10 @@ Structure::Structure(string path, GLuint shader)
 	GLfloat * shapeData  = f->getObjectData();
 	GLfloat * normalData = f->getNormals();
 
-	// TODO: Make this load the entire structure
 	for (uint i = 0; i < size; i+=FACES_PER_SEGMENT*TRIANGLE_SIZE*3)
 	{
 		PointCloud temp;
+		t.setIdentity();
 
 		for (int p = 0; p < FACES_PER_SEGMENT*TRIANGLE_SIZE*3; p+=3)
 		{
@@ -51,12 +53,6 @@ Structure::Structure(string path, GLuint shader)
 			temp.addNormal(normalData[p+i+2]);
 
 			temp.addColor(0.0f, 0.0f, 0.0f);
-
-			//cout << " -- " << endl;
-			//cout << shapeData[p+i  ] << endl;
-			//cout << shapeData[p+i+1] << endl;
-			//cout << shapeData[p+i+2] << endl;
-			//cout << " -- " << endl;
 		}
 
 		//cout << " ----- " << endl;
@@ -71,22 +67,27 @@ Structure::Structure(string path, GLuint shader)
 		section->setMass(1.0f);
 		section->setFriction(1.0f);
 		section->setRollingFriction(0.1f);
-		section->setScale(vec3(2.0f, 2.0f, 2.0f));
+		section->setScale(vec3(1.0f, 1.0f, 1.0f));
 		section->setRestitution(1.0f);
 
-		section->setPosition(temp.calcCenter());
+		//section->setPosition(temp.calcCenter());
 
 		section->configureRigidBody();
 
 		models->push_back(section);
 
-		shape->addChildShape(btTransform(), section->getCollisionShape());
+		shape->addChildShape(t, section->getCollisionShape());
 	}
+
+	//shape->createAabbTreeFromChildren();
+
+	
+	t.setIdentity();
 
 	btVector3 inertia(0, 0, 0);
 	shape->calculateLocalInertia(size*4, inertia);
 	// Size * 4 is the total mass
-	btRigidBody::btRigidBodyConstructionInfo info(size * 4, motionState, shape, inertia );
+	btRigidBody::btRigidBodyConstructionInfo info(size*4, motionState, shape, inertia );
 	rigidBody = new btRigidBody(info);
 
 	rigidBody->setFriction(1.0f);

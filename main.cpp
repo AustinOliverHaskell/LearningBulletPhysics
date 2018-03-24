@@ -98,7 +98,7 @@ int main (int argc, char * argv[])
     // Add them to the scene
     //world->addModel(object);
     world->addModel(plane);
-    //world->addModel(light);
+    world->addModel(light);
     //world->addModel(sphere);
     //world->addModel(cube);
     //world->addModel(cube2);

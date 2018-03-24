@@ -157,8 +157,6 @@ bool FileLoader::openFile(string path, bool tesselate)
 		// Calculate Normals
 		for (uint i = 0; i < verticies.size() - 9; i+=9)
 		{
-			// TODO: Use the Calc normal function to create normal data
-			//  this needs to happen on each pair of points
 			glm::vec3 one;
 			one.x = verticies[i    ];
 			one.y = verticies[i + 1];
