@@ -3,13 +3,15 @@
 #include "glHeader.h"
 #include "Controls.h"
 #include "PointCloud.h"
+#include "World.h"
+#include "btFractureBody.h"
 
 #include <btBulletDynamicsCommon.h>
 #include <iostream>
 
 using namespace glm;
 
-
+class World;
 /**
 	This class just handles the model transformations and also holds its
 	 own model data. Knows which shader to use on itslef
@@ -17,9 +19,9 @@ using namespace glm;
 class Model
 {
 	public:
-		Model(Model * m);
-		Model(PointCloud p, GLuint shade);
-		Model(std::string path, GLuint shade, bool tessalate = false);
+		Model(Model * m, World * w);
+		Model(PointCloud p, GLuint shade, World * w);
+		Model(std::string path, GLuint shade, World * w, bool tessalate = false);
 
 		~Model();
 
@@ -120,7 +122,7 @@ class Model
 		btCollisionShape * collisionShape;
 
 		// Rigid Body
-		btRigidBody * rigidBody;
+		btFractureBody * rigidBody;
 
 		// Motion State
 		btDefaultMotionState* motionState;
@@ -132,6 +134,8 @@ class Model
 		float resititution;
 
 		bool changeColor;
+
+		World * world;
 
 		// -----------------------------
 };

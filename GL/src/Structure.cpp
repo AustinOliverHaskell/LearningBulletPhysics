@@ -14,7 +14,7 @@ using namespace std;
 #define FACES_PER_SEGMENT 4
 #define TRIANGLE_SIZE 3
 
-Structure::Structure(string path, GLuint shader)
+Structure::Structure(string path, GLuint shader, World * world)
 {
 	models = new vector<Model *>();
 	clouds = new vector<PointCloud>();
@@ -61,7 +61,7 @@ Structure::Structure(string path, GLuint shader)
 
 		clouds->push_back(temp);
 
-		Model * section = new Model(temp, shader);
+		Model * section = new Model(temp, shader, world);
 
 		section->randomizeColor();
 		section->setMass(1.0f);
@@ -70,28 +70,31 @@ Structure::Structure(string path, GLuint shader)
 		section->setScale(vec3(1.0f, 1.0f, 1.0f));
 		section->setRestitution(1.0f);
 
-		//section->setPosition(temp.calcCenter());
+		section->setPosition(temp.calcCenter());
 
 		section->configureRigidBody();
 
 		models->push_back(section);
 
-		shape->addChildShape(t, section->getCollisionShape());
+		world->addModel(section);
+		//shape->addChildShape(t, section->getCollisionShape());
 	}
 
-	//shape->createAabbTreeFromChildren();
+	shape->createAabbTreeFromChildren();
 
 	
 	t.setIdentity();
 
-	btVector3 inertia(0, 0, 0);
-	shape->calculateLocalInertia(size*4, inertia);
-	// Size * 4 is the total mass
-	btRigidBody::btRigidBodyConstructionInfo info(size*4, motionState, shape, inertia );
-	rigidBody = new btRigidBody(info);
+	float mass = size;
 
-	rigidBody->setFriction(1.0f);
-	rigidBody->setRestitution(1.0f);
+	btVector3 inertia(0, 0, 0);
+	shape->calculateLocalInertia(mass, inertia);
+	// Size * 4 is the total mass
+	btRigidBody::btRigidBodyConstructionInfo info(mass, motionState, shape, inertia );
+	rigidBody = new btFractureBody(info, world->getPhysicsWorld());
+
+	rigidBody->setFriction(0.5f);
+	rigidBody->setRollingFriction(1.0f);
 }
 
 Structure::~Structure()
@@ -115,8 +118,16 @@ void Structure::render(Controls * controls)
 
 	for (auto it = models->begin(); it != models->end(); it++)
 	{
+		//(*it)->draw(controls);
 		(*it)->transformDraw(controls, trans);
 	}
+
+	/*for (uint i = 0; i < models->size(); i++)
+	{
+		models->at(i)->transformDraw(controls, shape->getChildTransform(i));
+	}*/
+
+
 }
 
 vector<Model*> * Structure::getModels()

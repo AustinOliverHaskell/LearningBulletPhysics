@@ -9,6 +9,7 @@
 #include "./h/World.h"
 #include "./h/c_DebugDraw.h"
 #include "./h/Structure.h"
+#include "./h/btFractureDynamicsWorld.h"
 
 #include <btBulletDynamicsCommon.h>
 
@@ -78,7 +79,7 @@ World::World()
     collisionConfiguration = new btDefaultCollisionConfiguration();
     dispatcher             = new btCollisionDispatcher(collisionConfiguration);
     solver                 = new btSequentialImpulseConstraintSolver();
-    dynamicsWorld          = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+    dynamicsWorld          = new btFractureDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
     dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
 
@@ -92,6 +93,9 @@ World::World()
 	defaultShader = loadShaders("./GL/src/shaders/SimpleVertexShader.vertexshader", "./GL/src/shaders/SimpleFragmentShader.fragmentshader");
 
 	debugdrawer->init(controls, defaultShader);
+
+	dynamicsWorld->getSolverInfo().m_splitImpulse = true;
+	dynamicsWorld->setFractureMode(false);
 }
 World::~World()
 {
@@ -125,11 +129,18 @@ void World::setBackgroundColor(float r, float g, float b)
 	glClearColor(r, g, b, 0.0f);
 }
 
+void World::calcGlue()
+{
+    dynamicsWorld->stepSimulation(1.0f / 60.0f);
+    dynamicsWorld->glueCallback();
+}
+
 void World::render()
 {
 	controls->computeMatrices();
 
-    dynamicsWorld->stepSimulation(1.0f / 60.f);
+	dynamicsWorld->stepSimulation(1.0f / 60.0f);
+	//dynamicsWorld->solveConstraints(dynamicsWorld->getSolverInfo());
 
 	// Clear the screen
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -141,6 +152,23 @@ void World::render()
 	if (glfwGetKey( window, GLFW_KEY_Q) == GLFW_PRESS)
 	{
 		debugger->showFPS();
+	}
+
+	// ----- Turn on and off fracture mode -----
+	static int oldState = GLFW_RELEASE;
+	int newState = glfwGetKey(window, GLFW_KEY_B);
+
+	if (newState == GLFW_RELEASE && oldState == GLFW_PRESS)
+	{
+		dynamicsWorld->setFractureMode(!dynamicsWorld->getFractureMode());
+		std::cout << "Fracture Mode: " << (dynamicsWorld->getFractureMode() ? "On" : "Off") << std::endl;
+	}
+	oldState = newState;
+	// -----------------------------------------
+
+
+	if (glfwGetKey( window, GLFW_KEY_B) == GLFW_PRESS)
+	{
 	}
 	
 	dynamicsWorld->debugDrawWorld();

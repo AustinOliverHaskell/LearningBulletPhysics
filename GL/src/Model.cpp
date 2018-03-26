@@ -2,6 +2,8 @@
 #include "./h/Controls.h"
 #include "./h/PointCloud.h"
 #include "./h/Model.h"
+#include "./h/btFractureBody.h"
+#include "./h/World.h"
 
 #include <cstdlib>
 #include <vector>
@@ -11,8 +13,10 @@ using namespace glm;
 
 // TODO: Add comments
 
-Model::Model(Model * m)
+Model::Model(Model * m, World * w)
 {
+	world = w;
+
 	vertexCount = m->getVertexCount();
 	faceCount = m->getFaceCount();
 
@@ -60,8 +64,10 @@ Model::Model(Model * m)
 	configureRigidBody();
 }
 
-Model::Model(PointCloud p, GLuint shade)
+Model::Model(PointCloud p, GLuint shade, World * w)
 {
+	world = w;
+
 	shapeData  = p.getVertexData();
 	colorData  = p.getColorData();
 	normalData = p.getNormalData();
@@ -96,8 +102,10 @@ Model::Model(PointCloud p, GLuint shade)
 
 }
 
-Model::Model(std::string path, GLuint shade,  bool tessalate)
+Model::Model(std::string path, GLuint shade, World * w, bool tessalate)
 {
+	world = w;
+
 	FileLoader * file = new FileLoader();
 
 	if (!file->openFile(path, tessalate))
@@ -546,7 +554,7 @@ void Model::configureRigidBody()
 		rigidBody = nullptr;
 	}
 
-    rigidBody = new btRigidBody(fallRigidBodyCI);
+    rigidBody = new btFractureBody(fallRigidBodyCI, world->getDynamicsWorld());
 }
 
 void Model::calcTriangleCollisionMesh()

@@ -75,7 +75,7 @@ void btFractureBody::recomputeConnectivity(btCollisionWorld* world)
 					tmp.m_childShape0 = compound->getChildShape(i);
 					tmp.m_childShape1 = compound->getChildShape(j);
 
-					tmp.m_strength = 1.f;
+					tmp.m_strength = 1.0f;
 
 					// Add to connection list
 					m_connections.push_back(tmp);
@@ -116,7 +116,7 @@ btCompoundShape* btFractureBody::shiftTransform(btCompoundShape* boxCompound,btS
 
 	///non-recursive compound shapes perform better
 	
-		/*#ifdef USE_RECURSIVE_COMPOUND
+		#ifdef USE_RECURSIVE_COMPOUND
 
 		btCompoundShape* newCompound = new btCompoundShape();
 		newCompound->addChildShape(principal.inverse(),boxCompound);
@@ -141,7 +141,7 @@ btCompoundShape* btFractureBody::shiftTransform(btCompoundShape* boxCompound,btS
 			if (isDynamic)
 				boxCompound->calculateLocalInertia(mass,localInertia);
 			
-		#else*/
+		#else
 		///creation is faster using a new compound to store the shifted children
 	btCompoundShape* newBoxCompound = new btCompoundShape();
 	for (int i=0;i<boxCompound->getNumChildShapes();i++)
@@ -150,9 +150,9 @@ btCompoundShape* btFractureBody::shiftTransform(btCompoundShape* boxCompound,btS
 		///updateChildTransform is really slow, because it re-calculates the AABB each time. todo: add option to disable this update
 		newBoxCompound->addChildShape(newChildTransform,boxCompound->getChildShape(i));
 	}
-	//#endif
+	#endif
 
-	//#endif//USE_RECURSIVE_COMPOUND
+	#endif//USE_RECURSIVE_COMPOUND
 
 	shift = principal;
 	return newBoxCompound;

@@ -4,6 +4,134 @@
 		"selected_items":
 		[
 			[
+				"getP",
+				"getPhysicsWorld\t(World.h)"
+			],
+			[
+				"shap",
+				"shape"
+			],
+			[
+				"getChi",
+				"getChildTransform\t(btFractureBody.cpp)"
+			],
+			[
+				"tran",
+				"transformDraw"
+			],
+			[
+				"btFrac",
+				"btFractureDynamicsWorld\t(World.h)"
+			],
+			[
+				"btFra",
+				"btFractureDynamicsWorld\t(FractureDemo.cpp)"
+			],
+			[
+				"bt",
+				"btQuaternion\t(Model.cpp)"
+			],
+			[
+				"trans",
+				"transformDraw\t(Model.cpp)"
+			],
+			[
+				"get",
+				"getViewMatrix"
+			],
+			[
+				"contr",
+				"controls"
+			],
+			[
+				"color",
+				"colorList"
+			],
+			[
+				"debug",
+				"debugdrawer"
+			],
+			[
+				"load",
+				"loadShaders\t(World.cpp)"
+			],
+			[
+				"deb",
+				"debugDrawWorld\t(c_DebugDraw.h)"
+			],
+			[
+				"in",
+				"inertia"
+			],
+			[
+				"calc",
+				"calculateLocalInertia\t(btFractureBody.cpp)"
+			],
+			[
+				"struc",
+				"structures"
+			],
+			[
+				"stru",
+				"structures"
+			],
+			[
+				"getD",
+				"getDynamicsWorld\t(World.cpp)"
+			],
+			[
+				"rigi",
+				"rigidBody"
+			],
+			[
+				"btRigi",
+				"btRigidBodyConstructionInfo\t(btFractureBody.h)"
+			],
+			[
+				"btDef",
+				"btDefaultMotionState\t(btFractureBody.cpp)"
+			],
+			[
+				"glLine",
+				"glLineWidth(2.5f"
+			],
+			[
+				"Frac",
+				"FractureDemo.h\t(FractureDemo.cpp)"
+			],
+			[
+				"conf",
+				"configureRigidBody\t(Model.h)"
+			],
+			[
+				"use",
+				"glUseProgram"
+			],
+			[
+				"mode",
+				"modelMatrix"
+			],
+			[
+				"defa",
+				"defaultShader"
+			],
+			[
+				"defu",
+				"defaultShader\t(World.h)"
+			],
+			[
+				"dyna",
+				"dynamicsWorld"
+			],
+			[
+				"face",
+				"faceCount"
+			],
+			[
+				"setRo",
+				"setRollingFriction\t(main.cpp)"
+			],
+			[
 				"getVer",
 				"getVertexCount"
 			],
@@ -14,10 +142,6 @@
 			[
 				"getVe",
 				"getVertexCount"
-			],
-			[
-				"get",
-				"getObjectData\t(Structure.cpp)"
 			],
 			[
 				"verte",
@@ -34,10 +158,6 @@
 			[
 				"gl",
 				"glHeader.h\t(Model.h)"
-			],
-			[
-				"calc",
-				"calcTriangleCollisionMesh"
 			],
 			[
 				"setCol",
@@ -84,10 +204,6 @@
 				"normalData"
 			],
 			[
-				"color",
-				"colorData"
-			],
-			[
 				"getS",
 				"getShapeData"
 			],
@@ -112,10 +228,6 @@
 				"normalData"
 			],
 			[
-				"setRo",
-				"setRollingFriction"
-			],
-			[
 				"GLF",
 				"GLFW_PRESS"
 			],
@@ -134,10 +246,6 @@
 			[
 				"setCo",
 				"setCollisionShape"
-			],
-			[
-				"trans",
-				"transform"
 			],
 			[
 				"cube",
@@ -194,10 +302,6 @@
 			[
 				"sha",
 				"shader"
-			],
-			[
-				"load",
-				"loadShaders"
 			],
 			[
 				"Model",
@@ -278,10 +382,6 @@
 			[
 				"to",
 				"toRadians"
-			],
-			[
-				"face",
-				"facelist"
 			],
 			[
 				"int",
@@ -372,10 +472,6 @@
 				"numberOfCycles"
 			],
 			[
-				"deb",
-				"Debugging"
-			],
-			[
 				"pop",
 				"populationSize"
 			],
@@ -418,112 +514,51 @@
 			[
 				"file",
 				"fileOpened"
-			],
-			[
-				"de",
-				"debugingEnabled"
-			],
-			[
-				"en",
-				"enable"
-			],
-			[
-				"LIB",
-				"LIBLOCATION"
-			],
-			[
-				"LI",
-				"LIBRARY"
-			],
-			[
-				"lBu",
-				"lBulletSoftBody"
-			],
-			[
-				"lBull",
-				"lBulletCollision"
-			],
-			[
-				"lB",
-				"lBulletSoftBody"
-			],
-			[
-				"ab",
-				"abstract"
-			],
-			[
-				"layer",
-				"layer3"
-			],
-			[
-				"new",
-				"newIndex"
-			],
-			[
-				"z",
-				"zIndex"
-			],
-			[
-				"a",
-				"append"
-			],
-			[
-				"con",
-				"constructLayer"
-			],
-			[
-				"la",
-				"layerNumber"
-			],
-			[
-				"Layer",
-				"layerNumber"
-			],
-			[
-				"inde",
-				"index"
-			],
-			[
-				"w",
-				"write"
-			],
-			[
-				"cons",
-				"constructHeader"
-			],
-			[
-				"find",
-				"findUsableArea"
-			],
-			[
-				"dea",
-				"dealACard"
-			],
-			[
-				"num",
-				"numCards"
-			],
-			[
-				"play",
-				"players"
-			],
-			[
-				"pla",
-				"players"
-			],
-			[
-				"Deck",
-				"DeckException"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
+			"file": "GL/src/World.cpp",
+			"settings":
+			{
+				"buffer_size": 4546,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 4462,
+				"buffer_size": 4665,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "GL/src/h/World.h",
+			"settings":
+			{
+				"buffer_size": 1500,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Examples/FractureDemo.cpp",
+			"settings":
+			{
+				"buffer_size": 10719,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "makefile",
+			"settings":
+			{
+				"buffer_size": 652,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -532,34 +567,16 @@
 			"file": "GL/src/Structure.cpp",
 			"settings":
 			{
-				"buffer_size": 1701,
+				"buffer_size": 2891,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "GL/src/h/Structure.h",
+			"file": "GL/src/h/btFractureBody.h",
 			"settings":
 			{
-				"buffer_size": 289,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "GL/src/h/PointCloud.h",
-			"settings":
-			{
-				"buffer_size": 1104,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "GL/src/PointCloud.cpp",
-			"settings":
-			{
-				"buffer_size": 2338,
+				"buffer_size": 2594,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -568,7 +585,25 @@
 			"file": "GL/src/Model.cpp",
 			"settings":
 			{
-				"buffer_size": 10557,
+				"buffer_size": 12046,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "GL/src/h/Model.h",
+			"settings":
+			{
+				"buffer_size": 2577,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "GL/src/h/Structure.h",
+			"settings":
+			{
+				"buffer_size": 543,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -629,26 +664,43 @@
 	"expanded_folders":
 	[
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/objLoaders",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/shaders"
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/objLoaders"
 	],
 	"file_history":
 	[
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/FileLoader.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureBody.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/btFractureDynamicsWorld.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/Notes.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/c_DebugDraw.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/btFractureBody.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/btFractureBody.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureBody.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/main.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/makefile",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/FractureDemo.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureDynamicsWorld.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureDynamicsWorld.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/FractureMain.hpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/main.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Model.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/Model.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/World.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/World.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/PointCloud.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/PointCloud.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Structure.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/Structure.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/h/c_DebugDraw.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/log.txt",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Graphics.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/makefile",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Model.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/FileLoader.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/Structure.h",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/PointCloud.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/PointCloud.h",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/Model.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/makefile",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/World.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/obj/Object.obj",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/World.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/.gitignore",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/FileLoader.h",
 		"/home/austin/Documents/Bit_Bashing_Example.cpp",
@@ -666,7 +718,6 @@
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/obj/plane.obj",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/makefile.make",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/main.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/main.cpp",
 		"/home/austin/Documents/repos/EvolvingStormResistantStructures/Source/code/PhysicsEngine/makefile.make",
 		"/home/austin/Documents/ObjCreation/Vec3.java",
 		"/home/austin/Documents/ObjCreation/ObjFileBuilder.java",
@@ -748,27 +799,11 @@
 		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/StructureFile.java",
 		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/9_YFWPQBBJR4T1VA1A_7.obj",
 		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/Object.obj",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/compiled/obj/test.obj",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/PhysicsEngine/Debug.cpp",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/PhysicsEngine/h/Debug.h",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/Layer.java",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/Member.java",
-		"/home/austin/Desktop/SoftwareDev/Group/ComparativeNewsAggregator/main.css",
-		"/home/austin/Desktop/SoftwareDev/Group/ComparativeNewsAggregator/styles.css",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/PhysicsEngine/h/CommonInterfaces/CommonRigidBodyBase.h",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/Vec.java",
-		"/home/austin/Desktop/DailyChallanges/AddingCalculator/DailyChallange331.go",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/PhysicsEngine/h/BasicExample.h",
-		"/home/austin/Documents/BulletSource/bullet3/examples/BasicDemo/BasicExample.cpp",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/PhysicsEngine/h/CommonInterfaces/CommonWindowInterface.h",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/PhysicsEngine/BasicExample.h",
-		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/code/PhysicsEngine/Debug.h",
-		"/home/austin/Desktop/Testing/main.cpp",
-		"/home/austin/Desktop/Testing/base.h"
+		"/home/austin/Desktop/Thesis/EvolvingStormResistantStructures/Source/compiled/obj/test.obj"
 	],
 	"find":
 	{
-		"height": 24.0
+		"height": 37.0
 	},
 	"find_in_files":
 	{
@@ -782,6 +817,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"breakDisconnectedParts",
+			"MyDebugDraw",
+			"-",
 			"Y_L",
 			"temp",
 			"glm::",
@@ -835,24 +873,55 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "main.cpp",
+					"file": "GL/src/World.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4462,
+						"buffer_size": 4546,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3291,
-								3291
+								3571,
+								3571
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2016.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4665,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3834,
+								3834
 							]
 						],
 						"settings":
@@ -864,118 +933,57 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 144.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "GL/src/Structure.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1701,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								653,
-								653
-							]
-						],
-						"settings":
-						{
-							"glslvalidator_configured": true,
-							"glslvalidator_enabled": 1,
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 480.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "GL/src/h/Structure.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 289,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								125,
-								125
-							]
-						],
-						"settings":
-						{
-							"glslvalidator_configured": true,
-							"glslvalidator_enabled": 1,
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "GL/src/h/PointCloud.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1104,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								588,
-								588
-							]
-						],
-						"settings":
-						{
-							"glslvalidator_configured": true,
-							"glslvalidator_enabled": 1,
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 768.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "GL/src/PointCloud.cpp",
+					"buffer": 2,
+					"file": "GL/src/h/World.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2338,
+						"buffer_size": 1500,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1729,
-								1729
+								480,
+								480
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 433.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Examples/FractureDemo.cpp",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 10719,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -986,27 +994,88 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 672.0,
+						"translation.y": 2448.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 652,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								547,
+								547
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/Makefile/Makefile.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "GL/src/Structure.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2891,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1893,
+								1893
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 864.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "GL/src/Model.cpp",
+					"buffer": 6,
+					"file": "GL/src/h/btFractureBody.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10557,
+						"buffer_size": 2594,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3644,
-								3644
+								1546,
+								1546
 							]
 						],
 						"settings":
@@ -1017,10 +1086,102 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2559.0,
+						"translation.y": 432.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "GL/src/Model.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12046,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8219,
+								8219
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 6335.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "GL/src/h/Model.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2577,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1647,
+								1647
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 768.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "GL/src/h/Structure.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 543,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								54,
+								54
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1103,7 +1264,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 177.0,
+	"side_bar_width": 242.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

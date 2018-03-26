@@ -10,8 +10,10 @@
 #include "GraphicDebugger.h"
 #include "c_DebugDraw.h"
 #include "Structure.h"
+#include "btFractureDynamicsWorld.h"
 
 class Structure;
+class Model;
 
 class World
 {
@@ -23,6 +25,9 @@ class World
 
 		void addModel(Model* m);
 		void addStructure(Structure * structure);
+
+		btDynamicsWorld * getPhysicsWorld() {return dynamicsWorld;};
+		void calcGlue();
 
 
 		void setLight(GLuint light);
@@ -64,7 +69,7 @@ class World
 
 
         btSequentialImpulseConstraintSolver *    solver;
-        btDiscreteDynamicsWorld *                dynamicsWorld;
+        btFractureDynamicsWorld *                dynamicsWorld;
         // -------------------
         
         // ----- Debug -----

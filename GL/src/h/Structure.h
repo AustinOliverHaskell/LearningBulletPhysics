@@ -4,11 +4,15 @@
 #include "glHeader.h"
 #include "PointCloud.h"
 #include "World.h"
+#include "btFractureBody.h"
+
+class World;
+class Model;
 
 class Structure
 {
 	public:
-		Structure(string path, GLuint shader);
+		Structure(string path, GLuint shader, World * world);
 		~Structure();
 
 		btRigidBody * getRigidBody() {return rigidBody;}
@@ -23,5 +27,5 @@ class Structure
 
 		btCompoundShape * shape;
 		btMotionState * motionState;
-		btRigidBody * rigidBody;
+		btFractureBody * rigidBody;
 };

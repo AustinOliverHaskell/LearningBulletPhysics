@@ -23,7 +23,7 @@ void btFractureBody::recomputeConnectivity(btCollisionWorld* world)
 		// Compare all child nodes to eachother to deturmine if they are connected
 		for (int i=0;i<compound->getNumChildShapes();i++)
 		{
-			for (int j=i+1;j<compound->getNumChildShapes();j++)
+			for (int j=i+1;j<compound->getNumChildShapes();j++)c
 			{
 
 				struct   MyContactResultCallback : public btCollisionWorld::ContactResultCallback
@@ -110,7 +110,6 @@ btCompoundShape* btFractureBody::shiftTransform(btCompoundShape* boxCompound,btS
 	btTransform principal;
 
 	boxCompound->calculatePrincipalAxisTransform(masses,principal,principalInertia);
-
 
 	///create a new compound with world transform/center of mass properly aligned with the principal axis
 
