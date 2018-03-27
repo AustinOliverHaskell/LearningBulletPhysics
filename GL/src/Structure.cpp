@@ -13,6 +13,7 @@ using namespace std;
 
 #define FACES_PER_SEGMENT 4
 #define TRIANGLE_SIZE 3
+#define SEGMENT_MASS 1.0f
 
 Structure::Structure(string path, GLuint shader, World * world)
 {
@@ -21,6 +22,7 @@ Structure::Structure(string path, GLuint shader, World * world)
 
 	shape = new btCompoundShape();
 	motionState = new btDefaultMotionState();
+	w = world;
 
 	// Load Entire Model
 	FileLoader * f = new FileLoader();
@@ -52,25 +54,22 @@ Structure::Structure(string path, GLuint shader, World * world)
 			temp.addNormal(normalData[p+i+1]);
 			temp.addNormal(normalData[p+i+2]);
 
+			// This value will get rewritten later
 			temp.addColor(0.0f, 0.0f, 0.0f);
 		}
-
-		//cout << " ----- " << endl;
-
-		//cout << "Created Split #" << i / (FACES_PER_SEGMENT*TRIANGLE_SIZE) << endl;
 
 		clouds->push_back(temp);
 
 		Model * section = new Model(temp, shader, world);
 
 		section->randomizeColor();
-		section->setMass(1.0f);
-		section->setFriction(1.0f);
-		section->setRollingFriction(0.1f);
+		section->setMass(SEGMENT_MASS);
+		section->setFriction(5.0f);
+		section->setRollingFriction(5.0f);
 		section->setScale(vec3(1.0f, 1.0f, 1.0f));
 		section->setRestitution(1.0f);
 
-		section->setPosition(temp.calcCenter());
+		section->setPosition(vec3(0, 2, 0));
 
 		section->configureRigidBody();
 
@@ -80,7 +79,7 @@ Structure::Structure(string path, GLuint shader, World * world)
 		//shape->addChildShape(t, section->getCollisionShape());
 	}
 
-	shape->createAabbTreeFromChildren();
+	/*shape->createAabbTreeFromChildren();
 
 	
 	t.setIdentity();
@@ -94,7 +93,7 @@ Structure::Structure(string path, GLuint shader, World * world)
 	rigidBody = new btFractureBody(info, world->getPhysicsWorld());
 
 	rigidBody->setFriction(0.5f);
-	rigidBody->setRollingFriction(1.0f);
+	rigidBody->setRollingFriction(1.0f);*/
 }
 
 Structure::~Structure()
@@ -118,8 +117,8 @@ void Structure::render(Controls * controls)
 
 	for (auto it = models->begin(); it != models->end(); it++)
 	{
-		//(*it)->draw(controls);
-		(*it)->transformDraw(controls, trans);
+		(*it)->draw(controls);
+		//(*it)->transformDraw(controls, trans);
 	}
 
 	/*for (uint i = 0; i < models->size(); i++)
@@ -133,4 +132,22 @@ void Structure::render(Controls * controls)
 vector<Model*> * Structure::getModels()
 {
 	return models;
+}
+
+void Structure::breakStructure()
+{
+	for (auto it = models->begin(); it != models->end(); it++)
+	{
+		((btFractureBody*)(*it)->getRigidBody())->setStrength(0.01f);
+		((btFractureBody*)(*it)->getRigidBody())->recomputeConnectivity(w->getDynamicsWorld());
+	}
+
+	for (auto it = models->begin(); it != models->end(); it++)
+	{
+		float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+        float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+        float z = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+
+		(*it)->getRigidBody()->applyCentralImpulse(btVector3(x * 100, y * 100, z * 100));
+	}	
 }

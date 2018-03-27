@@ -102,7 +102,7 @@ int main (int argc, char * argv[])
     //world->addModel(sphere);
     //world->addModel(cube);
     //world->addModel(cube2);
-    world->addStructure(s);
+    //world->addStructure(s);
     
     /*vector <Model *> * models = s->getModels();
 
@@ -115,6 +115,8 @@ int main (int argc, char * argv[])
     world->setBackgroundColor(0.0f, 0.0f, 0.0f);
     world->calcGlue();
 
+    cout << " ---------- Now Rendering ----------" << endl;
+
     // Render
     while(glfwGetKey(world->getWindow(), GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(world->getWindow()) == 0 )
     {
@@ -126,9 +128,14 @@ int main (int argc, char * argv[])
 
             Model * temp = new Model(sphere, world);
             temp->setPosition(vec3(x, 100.0f + y, z));
-            temp->setMass(1.0f);
+            temp->setMass(10.0f);
             temp->setColor(x, y, z);
             world->addModel(temp);
+        }
+
+        if (glfwGetKey(world->getWindow(), GLFW_KEY_V) == GLFW_PRESS)
+        {
+            s->breakStructure();
         }
 
         world->render();

@@ -2,6 +2,8 @@
 // Controls object
 #include "glHeader.h"
 
+#include <btBulletDynamicsCommon.h>
+
 using namespace glm;
 
 class Controls
@@ -14,6 +16,8 @@ public:
 	mat4 getViewMatrix();
 
 	void computeMatrices();
+
+	btRigidBody * grabObject(btDynamicsWorld * world);
 
 private:
 	mat4 viewMatrix;

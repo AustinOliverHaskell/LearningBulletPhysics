@@ -4,6 +4,66 @@
 		"selected_items":
 		[
 			[
+				"apply",
+				"applyImpulse\t(btFractureDynamicsWorld.cpp)"
+			],
+			[
+				"break",
+				"breakStructure\t(Structure.cpp)"
+			],
+			[
+				"recom",
+				"recomputeConnectivity\t(btFractureDynamicsWorld.cpp)"
+			],
+			[
+				"new",
+				"newVal"
+			],
+			[
+				"lRay",
+				"lRayStart_world"
+			],
+			[
+				"WI",
+				"WINDOW_HEIGHT"
+			],
+			[
+				"WIN",
+				"WINDOW_WIDTH"
+			],
+			[
+				"WIND",
+				"WINDOW_WIDTH"
+			],
+			[
+				"mouse",
+				"mouseY"
+			],
+			[
+				"getR",
+				"getRigidBody\t(World.cpp)"
+			],
+			[
+				"glue",
+				"glueCallback"
+			],
+			[
+				"getFr",
+				"getFractureMode"
+			],
+			[
+				"setFr",
+				"setFractureMode"
+			],
+			[
+				"get",
+				"getFractureMode\t(FractureDemo.cpp)"
+			],
+			[
+				"dya",
+				"dynamicsWorld"
+			],
+			[
 				"getP",
 				"getPhysicsWorld\t(World.h)"
 			],
@@ -34,10 +94,6 @@
 			[
 				"trans",
 				"transformDraw\t(Model.cpp)"
-			],
-			[
-				"get",
-				"getViewMatrix"
 			],
 			[
 				"contr",
@@ -458,62 +514,6 @@
 			[
 				"wind",
 				"windowName"
-			],
-			[
-				"WIND",
-				"WINDOW_HEIGHT"
-			],
-			[
-				"back",
-				"background-color"
-			],
-			[
-				"numb",
-				"numberOfCycles"
-			],
-			[
-				"pop",
-				"populationSize"
-			],
-			[
-				"dna",
-				"dnaLayers"
-			],
-			[
-				"Str",
-				"Structure"
-			],
-			[
-				"mut",
-				"mutate"
-			],
-			[
-				"t",
-				"titleText"
-			],
-			[
-				"title",
-				"titleFont"
-			],
-			[
-				"body",
-				"bodyFont"
-			],
-			[
-				"test",
-				"testEvaluator"
-			],
-			[
-				"s",
-				"structure"
-			],
-			[
-				"rad",
-				"random"
-			],
-			[
-				"file",
-				"fileOpened"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "GL/src/World.cpp",
 			"settings":
 			{
-				"buffer_size": 4546,
+				"buffer_size": 5648,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -532,51 +532,7 @@
 			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 4665,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "GL/src/h/World.h",
-			"settings":
-			{
-				"buffer_size": 1500,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Examples/FractureDemo.cpp",
-			"settings":
-			{
-				"buffer_size": 10719,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "makefile",
-			"settings":
-			{
-				"buffer_size": 652,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "GL/src/Structure.cpp",
-			"settings":
-			{
-				"buffer_size": 2891,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "GL/src/h/btFractureBody.h",
-			"settings":
-			{
-				"buffer_size": 2594,
+				"buffer_size": 4922,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -585,16 +541,33 @@
 			"file": "GL/src/Model.cpp",
 			"settings":
 			{
-				"buffer_size": 12046,
+				"buffer_size": 12202,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "GL/src/Controls.cpp",
+			"settings":
+			{
+				"buffer_size": 6979,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "GL/src/h/Model.h",
+			"file": "GL/src/h/Controls.h",
 			"settings":
 			{
-				"buffer_size": 2577,
+				"buffer_size": 590,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "GL/src/h/World.h",
+			"settings":
+			{
+				"buffer_size": 1548,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -603,8 +576,16 @@
 			"file": "GL/src/h/Structure.h",
 			"settings":
 			{
-				"buffer_size": 543,
+				"buffer_size": 596,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "GL/src/Structure.cpp",
+			"settings":
+			{
+				"buffer_size": 3496,
 				"line_ending": "Unix"
 			}
 		}
@@ -668,37 +649,40 @@
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/objLoaders"
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/objLoaders",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/shaders",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/h/BulletLib"
 	],
 	"file_history":
 	[
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/FileLoader.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureBody.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Structure.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/btFractureDynamicsWorld.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/btFractureBody.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/btFractureBody.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/Model.h",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Model.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/main.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/FractureDemo.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureDynamicsWorld.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureBody.cpp",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/makefile",
+		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/FileLoader.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/Notes.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/c_DebugDraw.h",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/btFractureBody.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/btFractureBody.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureBody.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/main.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/makefile",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/FractureDemo.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureDynamicsWorld.h",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/btFractureDynamicsWorld.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/Examples/FractureMain.hpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/main.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Model.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/Model.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/World.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/World.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/PointCloud.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/PointCloud.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Structure.cpp",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/h/Structure.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/h/c_DebugDraw.h",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/log.txt",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/Graphics.cpp",
-		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/makefile",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/makefile",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/GL/src/obj/Object.obj",
 		"/home/austin/Documents/repos/LearningBullet/LearningBulletPhysics/.gitignore",
@@ -803,13 +787,14 @@
 	],
 	"find":
 	{
-		"height": 37.0
+		"height": 24.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 92.0,
 		"where_history":
 		[
+			"<open folders>"
 		]
 	},
 	"find_state":
@@ -817,6 +802,16 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"maxImpact",
+			"m_strength",
+			"solveConstraints",
+			"fractureCallback",
+			"breakDisconnectedParts",
+			"\tdynamicsWorld->glueCallback();\nbreakDisconnectedParts",
+			"shiftTransformDistributeMass",
+			"glueCallback",
+			"serIndex",
+			"setUserIndex",
 			"breakDisconnectedParts",
 			"MyDebugDraw",
 			"-",
@@ -873,7 +868,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -882,15 +877,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4546,
+						"buffer_size": 5648,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3571,
-								3571
+								4227,
+								4227
 							]
 						],
 						"settings":
@@ -901,10 +896,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2016.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -913,15 +908,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4665,
+						"buffer_size": 4922,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3834,
-								3834
+								4651,
+								4651
 							]
 						],
 						"settings":
@@ -933,7 +928,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 768.0,
+						"translation.y": 1632.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -941,41 +936,11 @@
 				},
 				{
 					"buffer": 2,
-					"file": "GL/src/h/World.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1500,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								480,
-								480
-							]
-						],
-						"settings":
-						{
-							"glslvalidator_configured": true,
-							"glslvalidator_enabled": 1,
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 433.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Examples/FractureDemo.cpp",
+					"file": "GL/src/Model.cpp",
 					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 10719,
+						"buffer_size": 12202,
 						"regions":
 						{
 						},
@@ -994,57 +959,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2448.0,
+						"translation.y": 7920.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "makefile",
+					"buffer": 3,
+					"file": "GL/src/Controls.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 652,
+						"buffer_size": 6979,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								547,
-								547
-							]
-						],
-						"settings":
-						{
-							"glslvalidator_configured": true,
-							"glslvalidator_enabled": 1,
-							"syntax": "Packages/Makefile/Makefile.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "GL/src/Structure.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2891,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1893,
-								1893
+								1978,
+								1978
 							]
 						],
 						"settings":
@@ -1055,89 +990,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 864.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "GL/src/h/btFractureBody.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2594,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1546,
-								1546
-							]
-						],
-						"settings":
-						{
-							"glslvalidator_configured": true,
-							"glslvalidator_enabled": 1,
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 432.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "GL/src/Model.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12046,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								8219,
-								8219
-							]
-						],
-						"settings":
-						{
-							"glslvalidator_configured": true,
-							"glslvalidator_enabled": 1,
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 6335.0,
+						"translation.y": 1392.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "GL/src/h/Model.h",
+					"buffer": 4,
+					"file": "GL/src/h/Controls.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2577,
+						"buffer_size": 590,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1647,
-								1647
+								12,
+								12
 							]
 						],
 						"settings":
@@ -1148,27 +1021,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 768.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "GL/src/h/Structure.h",
+					"buffer": 5,
+					"file": "GL/src/h/World.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 543,
+						"buffer_size": 1548,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								54,
-								54
+								310,
+								310
 							]
 						],
 						"settings":
@@ -1181,7 +1054,68 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "GL/src/h/Structure.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 596,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								593,
+								593
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "GL/src/Structure.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3496,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1440.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1264,7 +1198,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 242.0,
+	"side_bar_width": 272.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

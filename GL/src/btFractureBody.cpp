@@ -75,7 +75,7 @@ void btFractureBody::recomputeConnectivity(btCollisionWorld* world)
 					tmp.m_childShape0 = compound->getChildShape(i);
 					tmp.m_childShape1 = compound->getChildShape(j);
 
-					tmp.m_strength = 1.0f;
+					tmp.m_strength = c_strength;
 
 					// Add to connection list
 					m_connections.push_back(tmp);

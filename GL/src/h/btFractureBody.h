@@ -47,6 +47,7 @@ public:
 	{
 		m_masses.push_back(constructionInfo.m_mass);
 		m_internalType=CUSTOM_FRACTURE_TYPE+CO_RIGID_BODY;
+		c_strength = 1.0f;
 	}
 
 
@@ -64,6 +65,7 @@ public:
 		:btRigidBody(mass,motionState,collisionShape,localInertia),
 		m_world(world)
 	{
+		c_strength = 1.0f;
 
 		for (int i=0;i<numMasses;i++)
 			m_masses.push_back(masses[i]);
@@ -81,6 +83,11 @@ public:
 	static btCompoundShape* shiftTransformDistributeMass(btCompoundShape* boxCompound,btScalar mass,btTransform& shift);
 	
 	static bool collisionCallback(btManifoldPoint& cp,	const btCollisionObject* colObj0,int partId0,int index0,const btCollisionObject* colObj1,int partId1,int index1);
+
+	void setStrength(btScalar newVal) {c_strength = newVal;};
+
+private:
+	btScalar c_strength;
 
 };
 

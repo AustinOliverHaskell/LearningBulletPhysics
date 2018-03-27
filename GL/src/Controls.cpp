@@ -5,6 +5,7 @@
 #include "glm/ext.hpp"
 
 #include <iostream>
+#include <btBulletDynamicsCommon.h>
 
 using namespace glm;
 
@@ -44,6 +45,85 @@ mat4 Controls::getProjectionMatrix()
 mat4 Controls::getViewMatrix()
 {
 	return viewMatrix;
+}
+
+btRigidBody * Controls::grabObject(btDynamicsWorld * world)
+{
+	btRigidBody * retVal = nullptr;
+	vec3 out_origin, out_direction;
+
+	double mouseX, mouseY;
+
+	glfwGetCursorPos(window, &mouseX, &mouseY);
+
+	glm::vec4 lRayStart_NDC(
+	((float)mouseX/(float)WINDOW_WIDTH  - 0.5f) * 2.0f, // [0,1024] -> [-1,1]
+	((float)mouseY/(float)WINDOW_HEIGHT - 0.5f) * 2.0f, // [0, 768] -> [-1,1]
+	-1.0, // The near plane maps to Z=-1 in Normalized Device Coordinates
+	1.0f
+	);
+
+	glm::vec4 lRayEnd_NDC(
+	((float)mouseX/(float)WINDOW_WIDTH  - 0.5f) * 2.0f,
+	((float)mouseY/(float)WINDOW_HEIGHT - 0.5f) * 2.0f,
+	0.0,
+	1.0f
+	);
+
+	// The Projection matrix goes from Camera Space to NDC.
+	// So inverse(ProjectionMatrix) goes from NDC to Camera Space.
+	glm::mat4 InverseProjectionMatrix = glm::inverse(projectionMatrix);
+
+	// The View Matrix goes from World Space to Camera Space.
+	// So inverse(ViewMatrix) goes from Camera Space to World Space.
+	glm::mat4 InverseViewMatrix = glm::inverse(viewMatrix);
+
+	glm::vec4 lRayStart_camera = InverseProjectionMatrix * lRayStart_NDC;    
+	lRayStart_camera/=lRayStart_camera.w;
+
+	glm::vec4 lRayStart_world  = InverseViewMatrix       * lRayStart_camera; 
+	lRayStart_world /=lRayStart_world .w;
+
+	glm::vec4 lRayEnd_camera   = InverseProjectionMatrix * lRayEnd_NDC;   
+	lRayEnd_camera  /=lRayEnd_camera  .w;
+
+	glm::vec4 lRayEnd_world    = InverseViewMatrix       * lRayEnd_camera;  
+	lRayEnd_world   /=lRayEnd_world   .w;
+
+	glm::vec3 lRayDir_world(lRayEnd_world - lRayStart_world);
+	lRayDir_world = glm::normalize(lRayDir_world);
+
+	out_origin = glm::vec3(lRayStart_world);
+	out_direction = glm::normalize(lRayDir_world);
+
+	glm::vec3 out_end = out_origin + out_direction*1000.0f;
+
+	btCollisionWorld::ClosestRayResultCallback RayCallback(
+		btVector3(out_origin.x, out_origin.y, out_origin.z), 
+		btVector3(out_end.x, out_end.y, out_end.z)
+	);
+	world->rayTest(
+		btVector3(out_origin.x, out_origin.y, out_origin.z), 
+		btVector3(out_end.x, out_end.y, out_end.z), 
+		RayCallback
+	);
+
+	if(RayCallback.hasHit())
+	{
+		btRigidBody* body = (btRigidBody*)btRigidBody::upcast(RayCallback.m_collisionObject);
+		if (body)
+		{
+			retVal = body;
+			//std::cout << "HIT" << std::endl;
+		}
+	}
+	/*else
+	{
+		std::cout << "No hit" << std::endl; 
+	}*/
+
+	return retVal;
+
 }
 
 void Controls::computeMatrices()

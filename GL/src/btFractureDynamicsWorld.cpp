@@ -350,8 +350,8 @@ void	btFractureDynamicsWorld::removeRigidBody(btRigidBody* body)
 		m_fractureBodies.remove(fbody);
 	}
 	
-
-
+	// TODO: ADD FRACTURE COUNT - Pretty sure here is a good place to count, or in function below
+	
 	btDiscreteDynamicsWorld::removeRigidBody(body);
 }
 
@@ -451,12 +451,7 @@ void	btFractureDynamicsWorld::breakDisconnectedParts( btFractureBody* fracObj)
 		}
 	}
 
-
-
-
-
 	removeRigidBody(fracObj);//should it also be removed from the array?
-
 
 }
 
@@ -495,6 +490,7 @@ void btFractureDynamicsWorld::fractureCallback( )
 //		printf("totalImpact=%f\n",totalImpact);
 
 		static float maxImpact = 0;
+
 		if (totalImpact>maxImpact)
 			maxImpact = totalImpact;
 

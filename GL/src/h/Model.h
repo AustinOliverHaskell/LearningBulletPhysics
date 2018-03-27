@@ -12,6 +12,7 @@
 using namespace glm;
 
 class World;
+class Controls;
 /**
 	This class just handles the model transformations and also holds its
 	 own model data. Knows which shader to use on itslef

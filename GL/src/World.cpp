@@ -133,6 +133,8 @@ void World::calcGlue()
 {
     dynamicsWorld->stepSimulation(1.0f / 60.0f);
     dynamicsWorld->glueCallback();
+    dynamicsWorld->setFractureMode(true);
+    std::cout << "Fracture mode: ON" << std::endl;
 }
 
 void World::render()
@@ -161,14 +163,25 @@ void World::render()
 	if (newState == GLFW_RELEASE && oldState == GLFW_PRESS)
 	{
 		dynamicsWorld->setFractureMode(!dynamicsWorld->getFractureMode());
-		std::cout << "Fracture Mode: " << (dynamicsWorld->getFractureMode() ? "On" : "Off") << std::endl;
+		std::cout << "Fracture Mode: " << (dynamicsWorld->getFractureMode() ? "ON" : "OFF") << std::endl;
 	}
 	oldState = newState;
 	// -----------------------------------------
 
 
-	if (glfwGetKey( window, GLFW_KEY_B) == GLFW_PRESS)
+	if (glfwGetKey( window, GLFW_KEY_G) == GLFW_PRESS)
 	{
+		dynamicsWorld->setFractureMode(false);
+		btRigidBody * hit = controls->grabObject(dynamicsWorld);
+
+		// If some internal states are off then this can return null, not a problem
+		//  just needs to be checked
+		if (hit != nullptr)
+		{
+			hit->forceActivationState(ACTIVE_TAG);
+			hit->applyCentralImpulse(btVector3(200.0f, 0.0f, 0.0f));
+		}
+		dynamicsWorld->setFractureMode(true);
 	}
 	
 	dynamicsWorld->debugDrawWorld();
@@ -177,11 +190,6 @@ void World::render()
 	for (auto it = objects.begin(); it != objects.end(); it++)
 	{
 		(*it)->draw(controls);
-	}
-
-	for (auto it = structures.begin(); it != structures.end(); it++)
-	{
-		(*it)->render(controls);
 	}
 
 	// Swap buffers

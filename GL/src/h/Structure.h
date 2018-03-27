@@ -21,6 +21,8 @@ class Structure
 		// For Debugging
 		vector<Model*> * getModels();
 
+		void breakStructure();
+
 	private:
 		vector <Model *> * models;
 		vector <PointCloud> * clouds;
@@ -28,4 +30,6 @@ class Structure
 		btCompoundShape * shape;
 		btMotionState * motionState;
 		btFractureBody * rigidBody;
+
+		World * w;
 };

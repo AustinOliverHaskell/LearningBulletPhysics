@@ -11,8 +11,11 @@
 
 using namespace glm;
 
-// TODO: Add comments
+// ----------------------------------------------------------------------
+// ----- ----- ----- BEGIN CONSTRUCTORS AND DESTRUCTORS ----- ----- -----
+// ----------------------------------------------------------------------
 
+// Copy constructor
 Model::Model(Model * m, World * w)
 {
 	world = w;
@@ -64,6 +67,9 @@ Model::Model(Model * m, World * w)
 	configureRigidBody();
 }
 
+/**
+ *  Make from pointcloud
+ */
 Model::Model(PointCloud p, GLuint shade, World * w)
 {
 	world = w;
@@ -102,6 +108,12 @@ Model::Model(PointCloud p, GLuint shade, World * w)
 
 }
 
+/**
+ *  Create from file 
+ *  @param path      path to obj file for this model
+ *  @param shade     shader to use when rendering this model
+ *  @param tessalate does object need tessalation (Defaults to false)
+ */
 Model::Model(std::string path, GLuint shade, World * w, bool tessalate)
 {
 	world = w;
@@ -155,6 +167,9 @@ Model::Model(std::string path, GLuint shade, World * w, bool tessalate)
 	isCopy = false;
 }
 
+/**
+ *  Destructor
+ */
 Model::~Model()
 {
 	if (setupComplete)
@@ -201,6 +216,15 @@ Model::~Model()
 	}
 }
 
+// ----------------------------------------------------------------------
+// ----- ----- ----- END OF CONSTRUCTORS AND DESRUCTORS ----- ----- ----- 
+// ----------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------
+// ----- ----- ----- ----- BEGIN OF GETTERS ----- ----- ----- ----- 
+// ----------------------------------------------------------------
+
 GLfloat * Model::getShapeData()
 {
 	return shapeData;
@@ -214,56 +238,6 @@ GLfloat * Model::getColorData()
 GLfloat * Model::getNormalData()
 {
 	return normalData;
-}
-
-
-
-void Model::setColor(float r, float g, float b)
-{
-	GLfloat * color = new GLfloat[faceCount * sizeof(vec3) * 3];
-
-	// Define color data for the object
-	for (uint i = 0; i < faceCount * sizeof(vec3); i+=3)
-	{
-		color[i  ] = r;
-		color[i+1] = g;
-		color[i+2] = b;
-	}
-
-	// Remove old memory
-	delete colorData;
-
-	colorData = color;
-
-	glGenBuffers(1, &colors);
-	glBindBuffer(GL_ARRAY_BUFFER, colors);
-	glBufferData(GL_ARRAY_BUFFER, faceCount * sizeof(vec3) * 3, colorData, GL_DYNAMIC_DRAW);
-}
-
-void Model::randomizeColor()
-{
-	GLfloat * color = new GLfloat[faceCount * sizeof(vec3) * 3];
-
-	// Define color data for the object
-	for (uint i = 0; i < faceCount * sizeof(vec3); i+=3)
-	{
-		float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-
-		color[i  ] = r;
-		color[i+1] = g;
-		color[i+2] = b;
-	}
-
-	// Remove old memory
-	delete colorData;
-
-	colorData = color;
-
-	glGenBuffers(1, &colors);
-	glBindBuffer(GL_ARRAY_BUFFER, colors);
-	glBufferData(GL_ARRAY_BUFFER, faceCount * sizeof(vec3) * 3, colorData, GL_DYNAMIC_DRAW);
 }
 
 uint Model::getFaceCount()
@@ -280,7 +254,6 @@ GLuint Model::getShader()
 {
 	return shader;
 }
-
 
 btRigidBody * Model::getRigidBody()
 {
@@ -329,6 +302,15 @@ mat4 Model::getTransform()
 {
 	return transform;
 }
+
+// --------------------------------------------------
+// ----- ----- ----- END OF GETTERS ----- ----- -----
+// --------------------------------------------------
+
+
+// ----------------------------------------------------------------
+// ----- ----- ----- ----- BEGIN OF SETTERS ----- ----- ----- ----- 
+// ----------------------------------------------------------------
 
 void Model::changeColorOnGround(bool c)
 {
@@ -405,6 +387,58 @@ void Model::setCollisionShape(btCollisionShape * shape)
 	collisionShape = shape;
 
 	configureRigidBody();
+}
+
+void Model::setColor(float r, float g, float b)
+{
+	GLfloat * color = new GLfloat[faceCount * sizeof(vec3) * 3];
+
+	// Define color data for the object
+	for (uint i = 0; i < faceCount * sizeof(vec3); i+=3)
+	{
+		color[i  ] = r;
+		color[i+1] = g;
+		color[i+2] = b;
+	}
+
+	// Remove old memory
+	delete colorData;
+
+	colorData = color;
+
+	glGenBuffers(1, &colors);
+	glBindBuffer(GL_ARRAY_BUFFER, colors);
+	glBufferData(GL_ARRAY_BUFFER, faceCount * sizeof(vec3) * 3, colorData, GL_DYNAMIC_DRAW);
+}
+
+// --------------------------------------------------
+// ----- ----- ----- END OF SETTERS ----- ----- -----
+// --------------------------------------------------
+
+void Model::randomizeColor()
+{
+	GLfloat * color = new GLfloat[faceCount * sizeof(vec3) * 3];
+
+	// Define color data for the object
+	for (uint i = 0; i < faceCount * sizeof(vec3); i+=3)
+	{
+		float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+
+		color[i  ] = r;
+		color[i+1] = g;
+		color[i+2] = b;
+	}
+
+	// Remove old memory
+	delete colorData;
+
+	colorData = color;
+
+	glGenBuffers(1, &colors);
+	glBindBuffer(GL_ARRAY_BUFFER, colors);
+	glBufferData(GL_ARRAY_BUFFER, faceCount * sizeof(vec3) * 3, colorData, GL_DYNAMIC_DRAW);
 }
 
 void Model::initBuffers()
@@ -495,26 +529,31 @@ void Model::draw(Controls * controls)
 	}
 }
 
+
+/**
+ * Draws this model using the passed in transforms
+ * @param controls Control object that contains the View and Projection Matricies
+ * @param trans    Tranform matrix to use in rendering
+ */
 void Model::transformDraw(Controls * controls, btTransform trans)
 {
 	if (setupComplete)
 	{
-		mat4 viewMatrix = controls->getViewMatrix();
 
-		mat4 m;
-
-		trans.getOpenGLMatrix(glm::value_ptr(m));
-
-		transform = scale(m, m_scale);
-
+		// Scale identity matrix
+		transform = scale(mat4(1), m_scale);
 		mat4 modelMatrix = transform;
 		
+		// Get the other matricies from the camera controls object
 		mat4 projectionMatrix = controls->getProjectionMatrix();
+		mat4 viewMatrix = controls->getViewMatrix();
 
 		mat4 MVP = projectionMatrix * viewMatrix * transform;
 
+		// Use the defined shader for this object
 		glUseProgram(shader);
 
+		// Pass out Matricies to openGL
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &modelMatrix[0][0]);
 		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &viewMatrix[0][0]);
@@ -531,14 +570,20 @@ void Model::transformDraw(Controls * controls, btTransform trans)
  		glBindBuffer(GL_ARRAY_BUFFER, normals);
  		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
+ 		// Draw
 		glDrawArrays(GL_TRIANGLES, 0, sizeof(vec3)*faceCount*3);
 
+		// Cleanup
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
 	}
 }
 
+/**
+ * This function does setup to create a rigid body, if anything major changes
+ *  (Such as a change of the collision shape) then this needs to be recalculated
+ */
 void Model::configureRigidBody()
 {
 	btVector3 fallInertia(0, 0, 0);
@@ -557,32 +602,27 @@ void Model::configureRigidBody()
     rigidBody = new btFractureBody(fallRigidBodyCI, world->getDynamicsWorld());
 }
 
+/**
+ * This function calculates a collision mesh based off of the actual model mesh
+ *  rather than some BulletPhysics primative. 
+ */
 void Model::calcTriangleCollisionMesh()
 {
 	btTriangleMesh * mesh = new btTriangleMesh();
 
-	//cout << " ----- ----- Mesh ----- ----- " << endl;
-
+	// Create each triangle
 	for (uint i = 0; i < vertexCount; i+=9)
 	{
 		btVector3 a(shapeData[i], shapeData[i+1], shapeData[i+2]);
 		btVector3 b(shapeData[i+3], shapeData[i+4], shapeData[i+5]);
 		btVector3 c(shapeData[i+6], shapeData[i+7], shapeData[i+8]);
 
-		/*cout << "Triangle" << endl;
-		cout << " ----- " << endl;
-		cout << "[" << shapeData[i] << ", " << shapeData[i+1] << "," << shapeData[i+2] << "]" << endl;
-		cout << "[" << shapeData[i+3] << ", " << shapeData[i+4] << "," << shapeData[i+5] << "]" << endl;
-		cout << "[" << shapeData[i+6] << ", " << shapeData[i+7] << "," << shapeData[i+8] << "]" << endl;*/
-
-
 		mesh->addTriangle(a, b, c);
 	}
 
-	//cout << " ----- ----- ----- ----- ----- " << endl;
-
 	btConvexTriangleMeshShape * meshCollision = new btConvexTriangleMeshShape(mesh);
 
+	// Safty check
 	if (collisionShape != nullptr)
 	{
 		delete collisionShape;
@@ -591,8 +631,9 @@ void Model::calcTriangleCollisionMesh()
 
 	collisionShape = meshCollision;
 
+	// Scale it if the model has a scaling factor (Default is 1.0f, 1.0f, 1.0f)
 	collisionShape->setLocalScaling(btVector3(m_scale.x, m_scale.y, m_scale.z));
 
+	// Configure the model to the new collision mesh
 	configureRigidBody();
-
 }

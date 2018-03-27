@@ -14,6 +14,7 @@
 
 class Structure;
 class Model;
+class Controls;
 
 class World
 {
