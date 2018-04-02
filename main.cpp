@@ -6,6 +6,10 @@
 #include "./GL/src/h/defs.h"
 #include "./GL/src/h/Structure.h"
 
+#define HEIGHT 80
+#define RANGE 70
+#define WEIGHT 1.0f
+
 int main (int argc, char * argv[])
 {
     srand (static_cast <unsigned> (time(0)));
@@ -35,7 +39,7 @@ int main (int argc, char * argv[])
     Model * cube2  = new Model("./GL/src/obj/cube.obj", solidShader, world);
     Model * plane  = new Model("./GL/src/obj/plane.obj",  solidShader, world, true);
     Model * light  = new Model("./GL/src/obj/cube.obj", solidShader, world);
-    Structure * s  = new Structure("./GL/src/obj/Object.obj", solidShader, world);
+    Structure * s  = new Structure("./GL/src/obj/Object.obj", solidShader, world);  
 
     // Initilize our buffers
     object->initBuffers();
@@ -47,7 +51,7 @@ int main (int argc, char * argv[])
 
     // Set the plane to a different color
     object->randomizeColor();
-    sphere->setColor(1.0f, 0.0f, 0.0f);
+    sphere->setColor(0.0f, 0.0f, 1.0f);
     cube  ->randomizeColor();
     cube2 ->randomizeColor();
     plane ->setColor(1.0f, 0.5f, 0.25f);
@@ -55,7 +59,7 @@ int main (int argc, char * argv[])
 
     // Physical Attributes
     object->setMass(50);
-    sphere->setMass(1);
+    sphere->setMass(WEIGHT);
     cube  ->setMass(0.5);
     cube2 ->setMass(0);
 
@@ -74,7 +78,7 @@ int main (int argc, char * argv[])
     plane ->setRestitution(0.5);
 
     plane ->setCollisionShape(new btStaticPlaneShape(btVector3(0, 1, 0), 0));
-    sphere->setCollisionShape(new btSphereShape(0.5));
+    sphere->setCollisionShape(new btSphereShape(1));
     cube2 ->setCollisionShape(new btBoxShape(btVector3(2, 2, 2)));
     // Cube will just use the defaults
 
@@ -87,8 +91,10 @@ int main (int argc, char * argv[])
 
     plane ->setScale(vec3(60.0f, 0.0f, 60.0f));
     cube2 ->setScale(vec3(2.0f, 2.0f, 2.0f));
-    sphere->setScale(vec3(0.5f, 0.5f, 0.5f));
+    sphere->setScale(vec3(0.2f, 0.2f, 0.2f));
     object->setScale(vec3(2.0f, 2.0f, 2.0f));
+
+    sphere->setType("Raindrop");
 
 
     // This one needs a special mesh, the meshes are slower but model
@@ -96,40 +102,32 @@ int main (int argc, char * argv[])
     object->calcTriangleCollisionMesh();
 
     // Add them to the scene
-    //world->addModel(object);
     world->addModel(plane);
-    world->addModel(light);
+    //world->addModel(object);
+    //world->addModel(light);
     //world->addModel(sphere);
     //world->addModel(cube);
     //world->addModel(cube2);
     //world->addStructure(s);
-    
-    /*vector <Model *> * models = s->getModels();
-
-    for (auto it = models->begin(); it != models->end(); it++)
-    {
-        world->addModel((*it));
-    }*/
 
     // Set Backgrond to black
     world->setBackgroundColor(0.0f, 0.0f, 0.0f);
     world->calcGlue();
 
-    cout << " ---------- Now Rendering ----------" << endl;
+    cout << " --------------- Now Rendering ---------------" << endl;
 
     // Render
     while(glfwGetKey(world->getWindow(), GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(world->getWindow()) == 0 )
     {
-        if (glfwGetKey(world->getWindow(), GLFW_KEY_I) == GLFW_PRESS)
+        for (int i = 0; i < 10; i++)
         {
-            float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-            float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-            float z = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+            float x = rand() % RANGE - (rand() % RANGE);
+            float y = HEIGHT;
+            float z = rand() % RANGE - (rand() % RANGE);
 
             Model * temp = new Model(sphere, world);
-            temp->setPosition(vec3(x, 100.0f + y, z));
-            temp->setMass(10.0f);
-            temp->setColor(x, y, z);
+            temp->setPosition(vec3(x, y, z));
+            temp->configureRigidBody();
             world->addModel(temp);
         }
 

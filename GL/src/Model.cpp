@@ -65,6 +65,9 @@ Model::Model(Model * m, World * w)
 
 	initBuffers();
 	configureRigidBody();
+
+	index = -1;
+	type = m->getType();
 }
 
 /**
@@ -105,7 +108,8 @@ Model::Model(PointCloud p, GLuint shade, World * w)
 	// Calls configureRigidBody internally
 	calcTriangleCollisionMesh();
 
-
+	index = -1;
+	type = "";
 }
 
 /**
@@ -165,6 +169,9 @@ Model::Model(std::string path, GLuint shade, World * w, bool tessalate)
 
 	changeColor = false;
 	isCopy = false;
+
+	index = -1;
+	type = "";
 }
 
 /**
@@ -219,6 +226,7 @@ Model::~Model()
 // ----------------------------------------------------------------------
 // ----- ----- ----- END OF CONSTRUCTORS AND DESRUCTORS ----- ----- ----- 
 // ----------------------------------------------------------------------
+
 
 
 // ----------------------------------------------------------------
@@ -287,6 +295,15 @@ float Model::getRestitution()
 
 vec3  Model::getPosition()
 {
+	if (motionState != nullptr)
+	{
+		btTransform trans;
+		motionState->getWorldTransform(trans);
+
+		btVector3 o = trans.getOrigin();
+
+		return vec3(o.getX(), o.getY(), o.getZ());
+	}
 	return position;
 }
 vec3  Model::getScale()
@@ -303,9 +320,15 @@ mat4 Model::getTransform()
 	return transform;
 }
 
+std::string Model::getType()
+{
+	return type;
+}
+
 // --------------------------------------------------
 // ----- ----- ----- END OF GETTERS ----- ----- -----
 // --------------------------------------------------
+
 
 
 // ----------------------------------------------------------------
@@ -381,6 +404,11 @@ void Model::setRestitution(float r)
 	resititution = r;
 }
 
+void Model::setType(std::string t)
+{
+	type = t;
+}
+
 void Model::setCollisionShape(btCollisionShape * shape)
 {
 	delete collisionShape;
@@ -415,6 +443,11 @@ void Model::setColor(float r, float g, float b)
 // ----- ----- ----- END OF SETTERS ----- ----- -----
 // --------------------------------------------------
 
+
+/**
+ * Randomizes the color buffer of this model
+ *  Just for fun
+ */
 void Model::randomizeColor()
 {
 	GLfloat * color = new GLfloat[faceCount * sizeof(vec3) * 3];
@@ -441,6 +474,9 @@ void Model::randomizeColor()
 	glBufferData(GL_ARRAY_BUFFER, faceCount * sizeof(vec3) * 3, colorData, GL_DYNAMIC_DRAW);
 }
 
+/**
+ * Initializes buffers for use by opengl
+ */
 void Model::initBuffers()
 {
 	// Set up the uniforms
@@ -451,18 +487,6 @@ void Model::initBuffers()
 	glGenBuffers(1, &verticies);
 	glBindBuffer(GL_ARRAY_BUFFER, verticies);
 	glBufferData(GL_ARRAY_BUFFER, faceCount * sizeof(vec3) * 3, shapeData, GL_STATIC_DRAW);
-
-	GLenum err = glGetError();
-
-	if (err != GL_NO_ERROR)
-	{
-		//cerr << "Error in Model::initBuffers: " << err << endl;
-	}
-
-	for (uint i = 0; i < faceCount * sizeof(vec3) * 3; i++)
-	{
-		//cout << shapeData[i] << endl;
-	}
 
 	glGenBuffers(1, &colors);
 	glBindBuffer(GL_ARRAY_BUFFER, colors);
@@ -586,6 +610,7 @@ void Model::transformDraw(Controls * controls, btTransform trans)
  */
 void Model::configureRigidBody()
 {
+	collisionShape->setLocalScaling(btVector3(m_scale.x, m_scale.y, m_scale.z));
 	btVector3 fallInertia(0, 0, 0);
 	collisionShape->calculateLocalInertia(mass, fallInertia);
     btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, motionState, collisionShape, fallInertia);

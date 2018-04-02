@@ -75,5 +75,6 @@ class World
         
         // ----- Debug -----
         BulletDebugDrawer_OpenGL * debugdrawer;
+        bool drawWithDebugging;
         // -----------------
 };	

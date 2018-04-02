@@ -47,6 +47,7 @@ mat4 Controls::getViewMatrix()
 	return viewMatrix;
 }
 
+
 btRigidBody * Controls::grabObject(btDynamicsWorld * world)
 {
 	btRigidBody * retVal = nullptr;

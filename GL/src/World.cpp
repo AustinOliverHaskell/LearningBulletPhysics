@@ -96,6 +96,8 @@ World::World()
 
 	dynamicsWorld->getSolverInfo().m_splitImpulse = true;
 	dynamicsWorld->setFractureMode(false);
+
+	drawWithDebugging = false;
 }
 World::~World()
 {
@@ -167,9 +169,13 @@ void World::render()
 	}
 	oldState = newState;
 	// -----------------------------------------
+	
 
+	// ----- Apply an impulse to an object -----
+	static int oldStateG = GLFW_RELEASE;
+	int newStateG = glfwGetKey(window, GLFW_KEY_G);
 
-	if (glfwGetKey( window, GLFW_KEY_G) == GLFW_PRESS)
+	if (newStateG == GLFW_RELEASE && oldStateG == GLFW_PRESS)
 	{
 		dynamicsWorld->setFractureMode(false);
 		btRigidBody * hit = controls->grabObject(dynamicsWorld);
@@ -179,22 +185,62 @@ void World::render()
 		if (hit != nullptr)
 		{
 			hit->forceActivationState(ACTIVE_TAG);
-			hit->applyCentralImpulse(btVector3(200.0f, 0.0f, 0.0f));
+			hit->applyCentralImpulse(btVector3(0.0f, 200.0f, 0.0f));
 		}
 		dynamicsWorld->setFractureMode(true);
 	}
+	oldStateG = newStateG;
+	// -----------------------------------------
 	
-	dynamicsWorld->debugDrawWorld();
-	debugdrawer->draw();
 
+	// ----- Turn on and off debug drawing -----
+	static int oldStateH = GLFW_RELEASE;
+	int newStateH = glfwGetKey(window, GLFW_KEY_H);
+
+	if (newStateH == GLFW_RELEASE && oldStateH == GLFW_PRESS)
+	{
+		drawWithDebugging = !drawWithDebugging;
+	}
+	oldStateH = newStateH;
+
+
+	if (drawWithDebugging)
+	{
+		dynamicsWorld->debugDrawWorld();
+		debugdrawer->draw();
+	}
+	// -----------------------------------------
+
+
+	// ----- Render objects (WIP) -----
 	for (auto it = objects.begin(); it != objects.end(); it++)
 	{
-		(*it)->draw(controls);
+		if ((*it)->getCollisionShape()->isCompound())
+		{
+			std::cout << (*it)->getRigidBody()->getUserIndex() << std::endl;
+			btCompoundShape * shape = (btCompoundShape*)(*it)->getCollisionShape();
+
+			for (uint i = 0; i < shape->getNumChildShapes(); i++)
+			{
+				btTransform trans = shape->getChildTransform(i);
+
+			}
+		}
+		else
+		{
+			if (((*it)->getType() == "Raindrop") && ((*it)->getPosition().y <= 1))
+			{
+				dynamicsWorld->removeRigidBody((*it)->getRigidBody());
+				objects.erase(it);
+			}
+			(*it)->draw(controls);
+		}
 	}
 
 	// Swap buffers
 	glfwSwapBuffers(window);
 	glfwPollEvents();
+	// --------------------------------
 }
 
 void World::addModel(Model* m)

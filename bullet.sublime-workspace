@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"null",
+				"nullptr"
+			],
+			[
+				"it",
+				"it"
+			],
+			[
+				"getChil",
+				"getChildTransform\t(btFractureBody.cpp)"
+			],
+			[
+				"btColl",
+				"btCollisionShape\t(Model.cpp)"
+			],
+			[
+				"getchi",
+				"getNumChildShapes\t(btFractureBody.cpp)"
+			],
+			[
+				"draw",
+				"drawWithDebugging"
+			],
+			[
+				"newState",
+				"newStateG"
+			],
+			[
+				"oldSt",
+				"oldStateG"
+			],
+			[
 				"apply",
 				"applyImpulse\t(btFractureDynamicsWorld.cpp)"
 			],
@@ -482,38 +514,6 @@
 			[
 				"Mod",
 				"ModelMatrixID"
-			],
-			[
-				"MV",
-				"MVP2"
-			],
-			[
-				"View",
-				"ViewMatrixID"
-			],
-			[
-				"ligh",
-				"lightPos"
-			],
-			[
-				"pro",
-				"projectionMatrix"
-			],
-			[
-				"edg",
-				"edgeOne"
-			],
-			[
-				"pos",
-				"position"
-			],
-			[
-				"shar",
-				"shaders"
-			],
-			[
-				"wind",
-				"windowName"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "GL/src/World.cpp",
 			"settings":
 			{
-				"buffer_size": 5648,
+				"buffer_size": 6813,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -532,7 +532,7 @@
 			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 4922,
+				"buffer_size": 4680,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -541,7 +541,17 @@
 			"file": "GL/src/Model.cpp",
 			"settings":
 			{
-				"buffer_size": 12202,
+				"buffer_size": 14334,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "GL/src/h/Model.h",
+			"settings":
+			{
+				"buffer_size": 2888,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -549,7 +559,7 @@
 			"file": "GL/src/Controls.cpp",
 			"settings":
 			{
-				"buffer_size": 6979,
+				"buffer_size": 6980,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -567,7 +577,7 @@
 			"file": "GL/src/h/World.h",
 			"settings":
 			{
-				"buffer_size": 1548,
+				"buffer_size": 1580,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -585,7 +595,8 @@
 			"file": "GL/src/Structure.cpp",
 			"settings":
 			{
-				"buffer_size": 3496,
+				"buffer_size": 3646,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		}
@@ -802,6 +813,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			");\n",
 			"maxImpact",
 			"m_strength",
 			"solveConstraints",
@@ -868,7 +880,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -877,15 +889,78 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5648,
+						"buffer_size": 6813,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4227,
-								4227
+								3855,
+								3855
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1872.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4680,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1721,
+								1721
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 624.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "GL/src/Model.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14334,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								28,
+								28
 							]
 						],
 						"settings":
@@ -903,52 +978,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "main.cpp",
+					"buffer": 3,
+					"file": "GL/src/h/Model.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4922,
+						"buffer_size": 2888,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4651,
-								4651
-							]
-						],
-						"settings":
-						{
-							"glslvalidator_configured": true,
-							"glslvalidator_enabled": 1,
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1632.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "GL/src/Model.cpp",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 12202,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
+								1664,
+								1664
 							]
 						],
 						"settings":
@@ -959,45 +1002,45 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 7920.0,
+						"translation.y": 576.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "GL/src/Controls.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6980,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5898,
+								5898
+							]
+						],
+						"settings":
+						{
+							"glslvalidator_configured": true,
+							"glslvalidator_enabled": 1,
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3168.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "GL/src/Controls.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6979,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1978,
-								1978
-							]
-						],
-						"settings":
-						{
-							"glslvalidator_configured": true,
-							"glslvalidator_enabled": 1,
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1392.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "GL/src/h/Controls.h",
 					"semi_transient": false,
 					"settings":
@@ -1024,24 +1067,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "GL/src/h/World.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1548,
+						"buffer_size": 1580,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								310,
-								310
+								376,
+								376
 							]
 						],
 						"settings":
@@ -1054,11 +1097,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "GL/src/h/Structure.h",
 					"semi_transient": false,
 					"settings":
@@ -1084,24 +1127,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "GL/src/Structure.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3496,
+						"buffer_size": 3646,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								341,
+								341
 							]
 						],
 						"settings":
@@ -1112,10 +1155,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1440.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -1198,7 +1241,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 272.0,
+	"side_bar_width": 237.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

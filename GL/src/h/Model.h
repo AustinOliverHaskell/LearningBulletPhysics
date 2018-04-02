@@ -51,6 +51,8 @@ class Model
 		float getFriction();
 		float getRollingFriction();
 		float getRestitution();
+
+		std::string getType();
 		// -------------------
 
 		// ----- Setters -----
@@ -73,6 +75,9 @@ class Model
 		void setFriction(float f);
 		void setRollingFriction(float f);
 		void setRestitution(float r);
+
+		void setIndex();
+		void setType(std::string t);
 		// -------------------
 
 		// ----- Draw -----
@@ -137,6 +142,11 @@ class Model
 		bool changeColor;
 
 		World * world;
-
 		// -----------------------------
+		
+
+		// ----- Indexing -----
+		int index; // Set elsewhere
+		std::string type;
+		// --------------------
 };

@@ -14,6 +14,7 @@ using namespace std;
 #define FACES_PER_SEGMENT 4
 #define TRIANGLE_SIZE 3
 #define SEGMENT_MASS 1.0f
+#define SCALING 10.0f
 
 Structure::Structure(string path, GLuint shader, World * world)
 {
@@ -64,12 +65,14 @@ Structure::Structure(string path, GLuint shader, World * world)
 
 		section->randomizeColor();
 		section->setMass(SEGMENT_MASS);
-		section->setFriction(5.0f);
+		section->setFriction(10.0f);
 		section->setRollingFriction(5.0f);
-		section->setScale(vec3(1.0f, 1.0f, 1.0f));
 		section->setRestitution(1.0f);
 
-		section->setPosition(vec3(0, 2, 0));
+		section->setScale(vec3(SCALING, SCALING, SCALING));
+		section->calcTriangleCollisionMesh();
+
+		section->setPosition(vec3(0, SCALING, 0));
 
 		section->configureRigidBody();
 
@@ -78,6 +81,9 @@ Structure::Structure(string path, GLuint shader, World * world)
 		world->addModel(section);
 		//shape->addChildShape(t, section->getCollisionShape());
 	}
+
+	//models->at(0)->setMass(0);
+	//models->at(0)->configureRigidBody();
 
 	/*shape->createAabbTreeFromChildren();
 
