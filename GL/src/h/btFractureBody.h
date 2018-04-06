@@ -9,6 +9,7 @@ class btManifoldPoint;
 
 #include "LinearMath/btAlignedObjectArray.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
+#include "Constants.h"
 
 // Mine -Austin
 class Model;
@@ -51,7 +52,7 @@ class btFractureBody : public btRigidBody
 	{
 		m_masses.push_back(constructionInfo.m_mass);
 		m_internalType=CUSTOM_FRACTURE_TYPE+CO_RIGID_BODY;
-		c_strength = 1.0f;
+		c_strength = GLUE_STRENGTH;
 	}
 
 
@@ -69,7 +70,7 @@ class btFractureBody : public btRigidBody
 		:btRigidBody(mass,motionState,collisionShape,localInertia),
 		m_world(world)
 	{
-		c_strength = 1.0f;
+		c_strength = GLUE_STRENGTH;
 
 		for (int i=0;i<numMasses;i++)
 			m_masses.push_back(masses[i]);

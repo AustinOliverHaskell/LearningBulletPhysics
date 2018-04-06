@@ -6,6 +6,7 @@
 #include "BulletCollision/CollisionDispatch/btUnionFind.h"
 #include "./h/Model.h"
 #include "./h/Controls.h"
+#include "./h/Constants.h"
 
 #include <iostream>
 
@@ -575,7 +576,7 @@ void btFractureDynamicsWorld::fractureCallback( )
 			maxImpact = totalImpact;
 
 		//some threshold otherwise resting contact would break objects after a while
-		if (totalImpact < 40.f)
+		if (totalImpact < RESTING_THRESHOLD)
 			continue;
 
 		//		printf("strong impact\n");

@@ -5,6 +5,7 @@
 #include "./h/World.h"
 #include "./h/btFractureBody.h"
 #include "./h/Model.h"
+#include "./h/Constants.h"
 
 class btFractureBody;
 
@@ -12,11 +13,6 @@ class btFractureBody;
 #include <vector>
 
 using namespace std;
-
-#define FACES_PER_SEGMENT 4
-#define TRIANGLE_SIZE 3
-#define SEGMENT_MASS 1.0f
-#define SCALING 10.0f
 
 Structure::Structure(string path, GLuint shader, World * world)
 {
