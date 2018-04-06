@@ -31,7 +31,7 @@ void btFractureDynamicsWorld::glueCallback()
 			btCollisionObject*   collisionObject= getCollisionObjectArray()[i];
 		//	btRigidBody* body = btRigidBody::upcast(collisionObject);
 			//Adding filtering here
-#ifdef STATIC_SIMULATION_ISLAND_OPTIMIZATION
+ #ifdef STATIC_SIMULATION_ISLAND_OPTIMIZATION
 			if (!collisionObject->isStaticOrKinematicObject())
 			{
 				collisionObject->setIslandTag(index++);
@@ -39,10 +39,10 @@ void btFractureDynamicsWorld::glueCallback()
 			{
 				collisionObject->setIslandTag(-1);
 			}
-#else
+ #else
 			collisionObject->setIslandTag(i);
 			index=i+1;
-#endif
+ #endif
 		}
 	}
 
@@ -96,9 +96,9 @@ void btFractureDynamicsWorld::glueCallback()
 			collisionObject->setIslandTag( tag);
 
 			//Set the correct object offset in Collision Object Array
-#if STATIC_SIMULATION_ISLAND_OPTIMIZATION
+ #if STATIC_SIMULATION_ISLAND_OPTIMIZATION
 			unionFind.getElement(index).m_sz = ai;
-#endif //STATIC_SIMULATION_ISLAND_OPTIMIZATION
+ #endif //STATIC_SIMULATION_ISLAND_OPTIMIZATION
 
 			index++;
 		}
@@ -174,7 +174,8 @@ void btFractureDynamicsWorld::glueCallback()
 					totalMass+=fracObj->m_masses[c];
 				}
 
-			} else
+			} 
+			delse
 			{
 				btTransform tr;
 				tr.setIdentity();
@@ -220,7 +221,8 @@ void btFractureDynamicsWorld::glueCallback()
 						massArray.push_back(curMass/(btScalar)oldCompound->getNumChildShapes());
 
 					}
-				} else
+				} 
+				else
 				{
 					btTransform tr;
 					tr = fracObj->getWorldTransform().inverseTimes(otherObject->getWorldTransform());
@@ -358,29 +360,37 @@ void	btFractureDynamicsWorld::removeRigidBody(btRigidBody* body)
 void	btFractureDynamicsWorld::breakDisconnectedParts( btFractureBody* fracObj)
 {
 
+	// If its not compund, dont worry about it
 	if (!fracObj->getCollisionShape()->isCompound())
 		return;
 
+	// Get the collision shape of the body
 	btCompoundShape* compound = (btCompoundShape*)fracObj->getCollisionShape();
+
+	// Get the number of children shapes
 	int numChildren = compound->getNumChildShapes();
 
+	// Another efficiency check, no need for single item to be processed
 	if (numChildren<=1)
 		return;
 
 	//compute connectivity
 	btUnionFind unionFind;
 
+	// What are the child tags
 	btAlignedObjectArray<int> tags;
 	tags.resize(numChildren);
+
+
 	int i, index = 0;
 	for ( i=0;i<numChildren;i++)
 	{
-#ifdef STATIC_SIMULATION_ISLAND_OPTIMIZATION
+ #ifdef STATIC_SIMULATION_ISLAND_OPTIMIZATION
 		tags[i] = index++;
-#else
+ #else
 		tags[i] = i;
 		index=i+1;
-#endif
+ #endif
 	}
 
 	unionFind.reset(index);
@@ -403,9 +413,9 @@ void	btFractureDynamicsWorld::breakDisconnectedParts( btFractureBody* fracObj)
 		int tag = unionFind.find(index);
 		tags[ai] = tag;
 		//Set the correct object offset in Collision Object Array
-#if STATIC_SIMULATION_ISLAND_OPTIMIZATION
+ #if STATIC_SIMULATION_ISLAND_OPTIMIZATION
 		unionFind.getElement(index).m_sz = ai;
-#endif //STATIC_SIMULATION_ISLAND_OPTIMIZATION
+ #endif //STATIC_SIMULATION_ISLAND_OPTIMIZATION
 		index++;
 	}
 	unionFind.sortIslands();
@@ -420,7 +430,9 @@ void	btFractureDynamicsWorld::breakDisconnectedParts( btFractureBody* fracObj)
 	for ( startIslandIndex=0;startIslandIndex<numElem;startIslandIndex = endIslandIndex)
 	{
 		int islandId = unionFind.getElement(startIslandIndex).m_id;
-		for (endIslandIndex = startIslandIndex+1;(endIslandIndex<numElem) && (unionFind.getElement(endIslandIndex).m_id == islandId);endIslandIndex++)
+
+		for (endIslandIndex = startIslandIndex+1;
+			 (endIslandIndex<numElem) && (unionFind.getElement(endIslandIndex).m_id == islandId);endIslandIndex++)
 		{
 		}
 
@@ -450,9 +462,6 @@ void	btFractureDynamicsWorld::breakDisconnectedParts( btFractureBody* fracObj)
 			numIslands++;
 		}
 	}
-
-
-
 
 
 	removeRigidBody(fracObj);//should it also be removed from the array?
@@ -492,7 +501,7 @@ void btFractureDynamicsWorld::fractureCallback( )
 		}
 
 		
-//		printf("totalImpact=%f\n",totalImpact);
+ //		printf("totalImpact=%f\n",totalImpact);
 
 		static float maxImpact = 0;
 		if (totalImpact>maxImpact)
@@ -521,7 +530,7 @@ void btFractureDynamicsWorld::fractureCallback( )
 		int f0 = m_fractureBodies.findLinearSearch((btFractureBody*)manifold->getBody0());
 		int f1 = m_fractureBodies.findLinearSearch((btFractureBody*)manifold->getBody1());
 
-		if (f0 == f1 == m_fractureBodies.size())
+		if ((f0 == f1) && (f1 == m_fractureBodies.size()))
 			continue;
 
 

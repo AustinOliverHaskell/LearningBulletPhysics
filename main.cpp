@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <cmath>
 
 #include "./GL/src/h/World.h"
 #include "./GL/src/h/Model.h"
@@ -7,8 +8,10 @@
 #include "./GL/src/h/Structure.h"
 
 #define HEIGHT 80
-#define RANGE 70
-#define WEIGHT 1.0f
+#define RANGE  70
+#define WEIGHT 0.01f
+#define WIND_SPEED     1.0f
+#define PARTICLE_COUNT 10
 
 int main (int argc, char * argv[])
 {
@@ -119,21 +122,17 @@ int main (int argc, char * argv[])
     // Render
     while(glfwGetKey(world->getWindow(), GLFW_KEY_ESCAPE ) != GLFW_PRESS && glfwWindowShouldClose(world->getWindow()) == 0 )
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < PARTICLE_COUNT; i++)
         {
-            float x = rand() % RANGE - (rand() % RANGE);
-            float y = HEIGHT;
+            float x = -40.0f;
+            float y = 2 + rand() % RANGE;
             float z = rand() % RANGE - (rand() % RANGE);
 
             Model * temp = new Model(sphere, world);
             temp->setPosition(vec3(x, y, z));
             temp->configureRigidBody();
+            temp->getRigidBody()->applyCentralImpulse(btVector3(WIND_SPEED, 0, 0));
             world->addModel(temp);
-        }
-
-        if (glfwGetKey(world->getWindow(), GLFW_KEY_V) == GLFW_PRESS)
-        {
-            s->breakStructure();
         }
 
         world->render();

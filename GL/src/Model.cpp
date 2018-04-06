@@ -185,11 +185,11 @@ Model::~Model()
 		glDeleteBuffers(1, &colors);
 	}
 
-	if (collisionShape != nullptr && !isCopy)
+	/*if (collisionShape != nullptr && !isCopy)
 	{
 		delete collisionShape;
 		collisionShape = nullptr;
-	}
+	}*/
 
 	if (motionState != nullptr)
 	{
@@ -509,6 +509,8 @@ void Model::draw(Controls * controls)
 		btTransform trans;
        	motionState->getWorldTransform(trans);
 
+       	//collisionShape->getWorldTransform(trans);
+
 		mat4 m;
 
 		trans.getOpenGLMatrix(glm::value_ptr(m));
@@ -566,13 +568,20 @@ void Model::transformDraw(Controls * controls, btTransform trans)
 
 		// Scale identity matrix
 		transform = scale(mat4(1), m_scale);
-		mat4 modelMatrix = transform;
+
+		mat4 m;
+
+		trans.getOpenGLMatrix(glm::value_ptr(m));
+
+		mat4 modelMatrix = m;
+
+		m = scale(m, m_scale);
 		
 		// Get the other matricies from the camera controls object
 		mat4 projectionMatrix = controls->getProjectionMatrix();
 		mat4 viewMatrix = controls->getViewMatrix();
 
-		mat4 MVP = projectionMatrix * viewMatrix * transform;
+		mat4 MVP = projectionMatrix * viewMatrix * m;
 
 		// Use the defined shader for this object
 		glUseProgram(shader);
@@ -617,6 +626,10 @@ void Model::configureRigidBody()
     fallRigidBodyCI.m_friction = friction;
     fallRigidBodyCI.m_restitution = resititution;
     fallRigidBodyCI.m_rollingFriction = rollingFriction;
+
+    // Max Becher came up with the 11 for testing 
+    //collisionShape->setUserIndex(11);
+    //collisionShape->setUserPointer((void*)this);
    	
     if (rigidBody != nullptr)
 	{
@@ -625,6 +638,8 @@ void Model::configureRigidBody()
 	}
 
     rigidBody = new btFractureBody(fallRigidBodyCI, world->getDynamicsWorld());
+    rigidBody->setUserPointer(this);
+    rigidBody->setUserIndex(12);
 }
 
 /**

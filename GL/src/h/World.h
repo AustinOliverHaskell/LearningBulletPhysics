@@ -15,6 +15,7 @@
 class Structure;
 class Model;
 class Controls;
+class btFractureDynamicsWorld;
 
 class World
 {
@@ -27,7 +28,7 @@ class World
 		void addModel(Model* m);
 		void addStructure(Structure * structure);
 
-		btDynamicsWorld * getPhysicsWorld() {return dynamicsWorld;};
+		btDynamicsWorld * getPhysicsWorld() {return (btDynamicsWorld*)dynamicsWorld;};
 		void calcGlue();
 
 

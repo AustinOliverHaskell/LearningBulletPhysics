@@ -1,10 +1,12 @@
 #include "./h/defs.h"
 #include "./h/Structure.h"
-#include "./h/Model.h"
 #include "./h/PointCloud.h"
 #include "./h/FileLoader.h"
 #include "./h/World.h"
 #include "./h/btFractureBody.h"
+#include "./h/Model.h"
+
+class btFractureBody;
 
 #include <iostream>
 #include <vector>
@@ -21,7 +23,6 @@ Structure::Structure(string path, GLuint shader, World * world)
 	models = new vector<Model *>();
 	clouds = new vector<PointCloud>();
 
-	shape = new btCompoundShape();
 	motionState = new btDefaultMotionState();
 	w = world;
 
@@ -36,6 +37,8 @@ Structure::Structure(string path, GLuint shader, World * world)
 	}
 	
 	uint size = f->getVertexCount();
+
+	cout << "MAX:" << size/9 << endl;
 
 	GLfloat * shapeData  = f->getObjectData();
 	GLfloat * normalData = f->getNormals();
@@ -74,7 +77,14 @@ Structure::Structure(string path, GLuint shader, World * world)
 
 		section->setPosition(vec3(0, SCALING, 0));
 
+		section->setType("Fragment");
+
 		section->configureRigidBody();
+		section->getRigidBody()->setUserPointer((void*)i);
+		section->getRigidBody()->setUserIndex(i/9);
+
+		section->getCollisionShape()->setUserIndex(i/9);
+		section->getCollisionShape()->setUserPointer(section);
 
 		models->push_back(section);
 

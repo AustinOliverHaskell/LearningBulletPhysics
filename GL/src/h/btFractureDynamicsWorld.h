@@ -3,11 +3,12 @@
 
 #include "BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
 #include "LinearMath/btAlignedObjectArray.h"
+#include "Controls.h"
 
 class btFractureBody;
 class btCompoundShape;
 class btTransform;
-
+class Controls;
 
 ///The btFractureDynamicsWorld class enabled basic glue and fracture of objects. 
 ///If/once this implementation is stablized/tested we might merge it into btDiscreteDynamicsWorld and remove the class.
@@ -28,6 +29,8 @@ public:
 	virtual void	addRigidBody(btRigidBody* body);
 
 	virtual void	removeRigidBody(btRigidBody* body);
+
+	void printCompounds(Controls * controls);
 
 	void	solveConstraints(btContactSolverInfo& solverInfo);
 

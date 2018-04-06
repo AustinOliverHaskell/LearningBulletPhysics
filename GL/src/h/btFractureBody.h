@@ -1,7 +1,6 @@
+#pragma once
 
-#ifndef BT_FRACTURE_BODY
-#define BT_FRACTURE_BODY
-
+// Bullet
 class btCollisionShape;
 class btDynamicsWorld;
 class btCollisionWorld;
@@ -10,6 +9,11 @@ class btManifoldPoint;
 
 #include "LinearMath/btAlignedObjectArray.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
+
+// Mine -Austin
+class Model;
+
+#include "Model.h"
 
 #define CUSTOM_FRACTURE_TYPE (btRigidBody::CO_USER_TYPE+1)
 
@@ -32,7 +36,7 @@ struct btConnection
 class btFractureBody : public btRigidBody
 {
 	//connections
-public:
+ public:
 	// Refrence to our world
 	btDynamicsWorld*	m_world;
 
@@ -73,7 +77,8 @@ public:
 		m_internalType=CUSTOM_FRACTURE_TYPE+CO_RIGID_BODY;
 	}
 
-	
+	void setModel(Model * m) {model = m;};
+	Model * getModel() {return model;};
 
 	void	recomputeConnectivity(btCollisionWorld* world);
 	
@@ -86,13 +91,12 @@ public:
 
 	void setStrength(btScalar newVal) {c_strength = newVal;};
 
-private:
+ private:
 	btScalar c_strength;
+	Model * model;
 
 };
 
 
 void fractureCallback(btDynamicsWorld* world, btScalar timeStep);
 void glueCallback(btDynamicsWorld* world, btScalar timeStep);
-
-#endif //BT_FRACTURE_BODY

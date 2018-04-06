@@ -4,11 +4,56 @@
 #include "BulletCollision/CollisionShapes/btCompoundShape.h"
 
 #include "BulletCollision/CollisionDispatch/btUnionFind.h"
+#include "./h/Model.h"
+#include "./h/Controls.h"
+
+#include <iostream>
+
+class Model;
+class Controls;
 
 btFractureDynamicsWorld::btFractureDynamicsWorld ( btDispatcher* dispatcher,btBroadphaseInterface* pairCache,btConstraintSolver* constraintSolver,btCollisionConfiguration* collisionConfiguration)
 :btDiscreteDynamicsWorld(dispatcher,pairCache,constraintSolver,collisionConfiguration),
 m_fracturingMode(true)
 {
+
+}
+
+void btFractureDynamicsWorld::printCompounds(Controls * controls)
+{
+	for (int i = 0; i < m_fractureBodies.size(); i++)
+	{
+		if (m_fractureBodies[i]->getCollisionShape()->isCompound())
+		{
+			btCompoundShape * shape = (btCompoundShape*) m_fractureBodies[i]->getCollisionShape();
+			//std::cout << " --- Comp --- " << endl;
+			for (int q = 0; q < shape->getNumChildShapes(); q++)
+			{
+				Model * model = (Model*) shape->getChildShape(q)->getUserPointer();
+
+				// TODO: NOTE: IMPORTANT ONE
+				//  So at this point I have all of the collision shapes as well as their 
+				//  coresponding models (Loaded in the UserPointer). I need to associate 
+				//  this with the rigidbodies that are created to utilize the transforms 
+				//  that will be in those rigid bodies. The setup is here (I belive) now 
+				//  I just have to fill in the gaps. 
+				//  
+				//  This was a son-of-a-bitch to figure out. Bedtime.
+				//model->setCollisionShape(shape->getChildShape(q));
+				
+				btTransform trans;
+				m_fractureBodies[i]->getMotionState()->getWorldTransform(trans);
+				
+				//std::cout << trans.getOrigin().getX() << std::endl;
+
+				model->transformDraw(controls, trans);
+
+				//std::cout << shape->getChildShape(q)->getUserIndex() << std::endl;
+			}
+			//std::cout << " ---- ---- " << std::endl;	
+		}
+	}
+
 
 }
 
@@ -170,6 +215,9 @@ void btFractureDynamicsWorld::glueCallback()
 				for (int c=0;c<oldCompound->getNumChildShapes();c++)
 				{
 					compound->addChildShape(oldCompound->getChildTransform(c),oldCompound->getChildShape(c));
+					compound->getChildShape(compound->getNumChildShapes()-1)->setUserIndex(oldCompound->getChildShape(c)->getUserIndex());
+					compound->getChildShape(compound->getNumChildShapes()-1)->setUserPointer(oldCompound->getChildShape(c)->getUserPointer());
+
 					massArray.push_back(fracObj->m_masses[c]);
 					totalMass+=fracObj->m_masses[c];
 				}
@@ -179,6 +227,9 @@ void btFractureDynamicsWorld::glueCallback()
 				btTransform tr;
 				tr.setIdentity();
 				compound->addChildShape(tr,fracObj->getCollisionShape());
+				compound->getChildShape(compound->getNumChildShapes()-1)->setUserIndex(fracObj->getCollisionShape()->getUserIndex());
+				compound->getChildShape(compound->getNumChildShapes()-1)->setUserPointer(fracObj->getCollisionShape()->getUserPointer());
+
 				massArray.push_back(fracObj->m_masses[0]);
 				totalMass+=fracObj->m_masses[0];
 			}
@@ -217,6 +268,8 @@ void btFractureDynamicsWorld::glueCallback()
 					{
 						tr = fracObj->getWorldTransform().inverseTimes(otherObject->getWorldTransform()*oldCompound->getChildTransform(c));
 						compound->addChildShape(tr,oldCompound->getChildShape(c));
+						compound->getChildShape(compound->getNumChildShapes()-1)->setUserIndex(oldCompound->getChildShape(c)->getUserIndex());
+						compound->getChildShape(compound->getNumChildShapes()-1)->setUserPointer(oldCompound->getChildShape(c)->getUserPointer());
 						massArray.push_back(curMass/(btScalar)oldCompound->getNumChildShapes());
 
 					}
@@ -224,7 +277,11 @@ void btFractureDynamicsWorld::glueCallback()
 				{
 					btTransform tr;
 					tr = fracObj->getWorldTransform().inverseTimes(otherObject->getWorldTransform());
+
 					compound->addChildShape(tr,otherObject->getCollisionShape());
+					compound->getChildShape(compound->getNumChildShapes()-1)->setUserIndex(otherObject->getCollisionShape()->getUserIndex());
+					compound->getChildShape(compound->getNumChildShapes()-1)->setUserPointer(otherObject->getCollisionShape()->getUserPointer());
+
 					massArray.push_back(curMass);
 				}
 				totalMass+=curMass;
@@ -253,6 +310,7 @@ void btFractureDynamicsWorld::glueCallback()
 				newBody->applyImpulse(imp, rel_pos);
 			}
 
+			newBody->setMotionState(new btDefaultMotionState());
 			addRigidBody(newBody);
 
 
@@ -310,9 +368,15 @@ btFractureBody* btFractureDynamicsWorld::addNewBody(const btTransform& oldTransf
 	btScalar totalMass = 0;
 	for (i=0;i<newCompound->getNumChildShapes();i++)
 		totalMass += masses[i];
+
+	for (i = 0; i < newCompound->getNumChildShapes(); i++)
+	{
+		newCompound->getChildShape(i)->setUserIndex(oldCompound->getChildShape(i)->getUserIndex());
+	}
 	//newCompound->calculateLocalInertia(totalMass,localInertia);
 
-	btFractureBody* newBody = new btFractureBody(totalMass,0,newCompound,localInertia, masses,newCompound->getNumChildShapes(), this);
+	btFractureBody* newBody = new btFractureBody(totalMass,new btDefaultMotionState(),newCompound,localInertia, masses,newCompound->getNumChildShapes(), this);
+
 	newBody->recomputeConnectivity(this);
 
 	newBody->setCollisionFlags(newBody->getCollisionFlags()|btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK);
@@ -328,6 +392,12 @@ void btFractureDynamicsWorld::addRigidBody(btRigidBody* body)
 		btFractureBody* fbody = (btFractureBody*)body;
 		m_fractureBodies.push_back(fbody);
 	}
+
+	if (body->getMotionState() == nullptr || body->getMotionState() == NULL)
+	{
+		body->setMotionState(new btDefaultMotionState());
+	}
+
 	btDiscreteDynamicsWorld::addRigidBody(body);
 }
 
@@ -375,12 +445,12 @@ void	btFractureDynamicsWorld::breakDisconnectedParts( btFractureBody* fracObj)
 	int i, index = 0;
 	for ( i=0;i<numChildren;i++)
 	{
-#ifdef STATIC_SIMULATION_ISLAND_OPTIMIZATION
+ #ifdef STATIC_SIMULATION_ISLAND_OPTIMIZATION
 		tags[i] = index++;
-#else
+ #else
 		tags[i] = i;
 		index=i+1;
-#endif
+ #endif
 	}
 
 	unionFind.reset(index);
@@ -403,9 +473,9 @@ void	btFractureDynamicsWorld::breakDisconnectedParts( btFractureBody* fracObj)
 		int tag = unionFind.find(index);
 		tags[ai] = tag;
 		//Set the correct object offset in Collision Object Array
-#if STATIC_SIMULATION_ISLAND_OPTIMIZATION
+ #if STATIC_SIMULATION_ISLAND_OPTIMIZATION
 		unionFind.getElement(index).m_sz = ai;
-#endif //STATIC_SIMULATION_ISLAND_OPTIMIZATION
+ #endif //STATIC_SIMULATION_ISLAND_OPTIMIZATION
 		index++;
 	}
 	unionFind.sortIslands();
@@ -438,6 +508,17 @@ void	btFractureDynamicsWorld::breakDisconnectedParts( btFractureBody* fracObj)
 			int i = unionFind.getElement(idx).m_sz;
 	//		btCollisionShape* shape = compound->getChildShape(i);
 			newCompound->addChildShape(compound->getChildTransform(i),compound->getChildShape(i));
+			newCompound->getChildShape(newCompound->getNumChildShapes()-1)->setUserIndex(compound->getChildShape(i)->getUserIndex());
+			newCompound->getChildShape(newCompound->getNumChildShapes()-1)->setUserPointer(compound->getChildShape(i)->getUserPointer());
+
+
+			/*int * ptr = (compound->getChildShape(i)->getUserPointer());
+			if (ptr != NULL)
+			{
+				std::cout << *(ptr) << std::endl;
+			}*/
+			//std::cout << compound->getChildShape(i)->getUserIndex() << std::endl;
+
 			masses.push_back(fracObj->m_masses[i]);
 			numShapes++;
 		}
@@ -460,7 +541,6 @@ void	btFractureDynamicsWorld::breakDisconnectedParts( btFractureBody* fracObj)
 
 void btFractureDynamicsWorld::fractureCallback( )
 {
-
 	btAlignedObjectArray<btFracturePair> sFracturePairs;
 
 	if (!m_fracturingMode)
@@ -487,7 +567,7 @@ void btFractureDynamicsWorld::fractureCallback( )
 		}
 
 		
-//		printf("totalImpact=%f\n",totalImpact);
+ //		printf("totalImpact=%f\n",totalImpact);
 
 		static float maxImpact = 0;
 
@@ -517,7 +597,7 @@ void btFractureDynamicsWorld::fractureCallback( )
 		int f0 = m_fractureBodies.findLinearSearch((btFractureBody*)manifold->getBody0());
 		int f1 = m_fractureBodies.findLinearSearch((btFractureBody*)manifold->getBody1());
 
-		if (f0 == f1 == m_fractureBodies.size())
+		if ((f0 == f1) && (f1 == m_fractureBodies.size()))
 			continue;
 
 

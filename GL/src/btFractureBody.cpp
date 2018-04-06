@@ -120,6 +120,9 @@ btCompoundShape* btFractureBody::shiftTransform(btCompoundShape* boxCompound,btS
 
 		btCompoundShape* newCompound = new btCompoundShape();
 		newCompound->addChildShape(principal.inverse(),boxCompound);
+		newCompound->getChildShape(newCompound->getNumChildShapes()-1)->setUserIndex(boxCompound->getUserIndex());
+		newCompound->getChildShape(newCompound->getNumChildShapes()-1)->setUserPointer(boxCompound->getUserPointer());
+
 		newBoxCompound = newCompound;
 		//m_collisionShapes.push_back(newCompound);
 
@@ -149,6 +152,8 @@ btCompoundShape* btFractureBody::shiftTransform(btCompoundShape* boxCompound,btS
 		btTransform newChildTransform = principal.inverse()*boxCompound->getChildTransform(i);
 		///updateChildTransform is really slow, because it re-calculates the AABB each time. todo: add option to disable this update
 		newBoxCompound->addChildShape(newChildTransform,boxCompound->getChildShape(i));
+		newBoxCompound->getChildShape(newBoxCompound->getNumChildShapes()-1)->setUserIndex(boxCompound->getChildShape(i)->getUserIndex());
+		newBoxCompound->getChildShape(newBoxCompound->getNumChildShapes()-1)->setUserPointer(boxCompound->getChildShape(i)->getUserPointer());
 	}
 	#endif
 

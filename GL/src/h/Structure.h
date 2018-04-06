@@ -6,6 +6,7 @@
 #include "World.h"
 #include "btFractureBody.h"
 
+class btFractureBody;
 class World;
 class Model;
 
@@ -15,7 +16,7 @@ class Structure
 		Structure(string path, GLuint shader, World * world);
 		~Structure();
 
-		btRigidBody * getRigidBody() {return rigidBody;}
+		btRigidBody * getRigidBody() {return (btRigidBody*) rigidBody;}
 		void render(Controls * controls);
 
 		// For Debugging

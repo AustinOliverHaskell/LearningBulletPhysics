@@ -186,6 +186,12 @@ void World::render()
 		{
 			hit->forceActivationState(ACTIVE_TAG);
 			hit->applyCentralImpulse(btVector3(0.0f, 200.0f, 0.0f));
+
+			//btTransform trans;
+
+			//hit->getMotionState()->getWorldTransform(trans);
+
+			//std::cout << "X" << trans.getOrigin().getX();
 		}
 		dynamicsWorld->setFractureMode(true);
 	}
@@ -203,37 +209,27 @@ void World::render()
 	}
 	oldStateH = newStateH;
 
-
 	if (drawWithDebugging)
 	{
 		dynamicsWorld->debugDrawWorld();
 		debugdrawer->draw();
 	}
 	// -----------------------------------------
-
+	
+	dynamicsWorld->printCompounds(controls);	
 
 	// ----- Render objects (WIP) -----
 	for (auto it = objects.begin(); it != objects.end(); it++)
 	{
-		if ((*it)->getCollisionShape()->isCompound())
+		if ((*it)->getType() != "Fragment")
 		{
-			std::cout << (*it)->getRigidBody()->getUserIndex() << std::endl;
-			btCompoundShape * shape = (btCompoundShape*)(*it)->getCollisionShape();
-
-			for (uint i = 0; i < shape->getNumChildShapes(); i++)
-			{
-				btTransform trans = shape->getChildTransform(i);
-
-			}
-		}
-		else
-		{
-			if (((*it)->getType() == "Raindrop") && ((*it)->getPosition().y <= 1))
-			{
-				dynamicsWorld->removeRigidBody((*it)->getRigidBody());
-				objects.erase(it);
-			}
 			(*it)->draw(controls);
+		}
+		if (((*it)->getType() == "Raindrop") && ((*it)->getPosition().y <= 1))
+		{
+			dynamicsWorld->removeRigidBody((*it)->getRigidBody());
+			objects.erase(it);
+			continue;
 		}
 	}
 
