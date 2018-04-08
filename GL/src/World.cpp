@@ -139,6 +139,11 @@ void World::calcGlue()
     std::cout << "Fracture mode: ON" << std::endl;
 }
 
+void World::step()
+{
+	dynamicsWorld->stepSimulation(1.0f / 60.0f);
+}
+
 void World::render()
 {
 	controls->computeMatrices();

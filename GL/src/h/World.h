@@ -23,6 +23,7 @@ class World
 		World();
 		~World();
 
+		void step();
 		void render();
 
 		void addModel(Model* m);
@@ -59,7 +60,6 @@ class World
 
 		GLuint defaultShader;
 		// ------------------
-		
 
 		// ----- Physics -----
 		

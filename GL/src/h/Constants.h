@@ -12,7 +12,7 @@
 #define WIND_SPEED_Y 0.0f
 #define WIND_SPEED_Z 0.0f
 
-#define PARTICLE_COUNT 10
+#define PARTICLE_COUNT 50
 #define PARTICLE_SCALING 0.1f
 
 #define PARTICLE_R 0.0f

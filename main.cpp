@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include <getopt.h>
 
 #include "./GL/src/h/World.h"
 #include "./GL/src/h/Model.h"
@@ -8,8 +9,36 @@
 #include "./GL/src/h/Structure.h"
 #include "./GL//src/h/Constants.h"
 
+using namespace std;
+
 int main (int argc, char * argv[])
 {
+    // Defaults
+    string mode = "CONCISE";
+    string path = "./GL/src/obj/Object.obj";
+
+    int c;
+
+    while ((c = getopt(argc, argv, "hf:v")) != -1)
+    {
+        switch (c)
+        {
+            case 'h':
+                cerr << argv[0] << "options:" << endl;
+                cerr << "  -f Filename to simulate. " << endl;
+                cerr << "  -v Enable verbose mode. " << endl;
+                exit(0);
+
+            case 'f':
+                path = optarg;
+                break;
+
+            case 'v':
+                mode = "VERBOSE";
+                break;
+        }
+    }
+
     srand (static_cast <unsigned> (time(0)));
 
     std::cout << "Thesis" << std::endl;
@@ -35,7 +64,7 @@ int main (int argc, char * argv[])
     Model * sphere = new Model("./GL/src/obj/sphere.obj", solidShader, world);
     Model * plane  = new Model("./GL/src/obj/plane.obj",  solidShader, world, true);
     Model * light  = new Model("./GL/src/obj/cube.obj", solidShader, world);
-    Structure * s  = new Structure("./GL/src/obj/Object.obj", solidShader, world);  
+    Structure * s  = new Structure(path, solidShader, world);  
 
     // Initilize our buffers
     object->initBuffers();
@@ -108,8 +137,14 @@ int main (int argc, char * argv[])
             temp->getRigidBody()->applyCentralImpulse(btVector3(WIND_SPEED_X, WIND_SPEED_Y, WIND_SPEED_Z));
             world->addModel(temp);
         }
-
-        world->render();
+        if (mode == "VERBOSE")
+        {
+            world->render();
+        }
+        else
+        {
+            world->step();
+        }
     }
 
     // The world object will handle the destruction of all models in its space

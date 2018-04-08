@@ -32,6 +32,11 @@ void btFractureDynamicsWorld::printCompounds(Controls * controls)
 			{
 				Model * model = (Model*) shape->getChildShape(q)->getUserPointer();
 
+				if (shape->getNumChildShapes() <= 1)
+				{
+					model->setColor(1.0f, 0.0f, 0.0f);
+				}
+
 				// TODO: NOTE: IMPORTANT ONE
 				//  So at this point I have all of the collision shapes as well as their 
 				//  coresponding models (Loaded in the UserPointer). I need to associate 
